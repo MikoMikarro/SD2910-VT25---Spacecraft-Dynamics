@@ -68,6 +68,7 @@ quaternion(-0.79584, -0.44441, -0.26931, -0.33574)
 0.000032316960115536
 ```
 # A 1
-![a1_problem](https://github.com/user-attachments/assets/ca75014d-b355-4cff-ad14-1eca15f1cd6f)
+![ai_problem](https://github.com/user-attachments/assets/9df51242-a0f0-4788-8062-439cee51a638)
+
 # A 2
 
