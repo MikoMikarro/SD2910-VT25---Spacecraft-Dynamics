@@ -46,18 +46,6 @@ for i = 1:3
 end
 
 
-% Event function to detect when |p| exceeds 1
-function [value, isterminal, direction] = shadow_set_event(t, p)
-    % Value goes negative when |p| exceeds 1
-    value = 1 - sum(p.^2);
-    
-    % Stop the integration when the event occurs
-    isterminal = 1;
-    
-    % Detect only when crossing from positive to negative
-    direction = -1;
-end
-
 % Quaternion derivative function
 function dqdt = quaternion_derivative(q, omega)
     % Reshape q to ensure it's a column vector
