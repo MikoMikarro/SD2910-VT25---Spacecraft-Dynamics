@@ -1,15 +1,66 @@
 # E 1
 #### a
+The code used to solve the problem is the following
 ```matlab
-[-68.4079377391915 -50.8248414694805 66.6838345696356] % mm
+%% Inputs
+V = [80, 60, 40]'; % mm
+de1 = deg2rad(+42);
+de2 = deg2rad(-49);
+
+DCM_a = eul2rotm([0, de1, de2], 'ZYX');
+V_a = DCM_a * V;
+VA = V_a - V;
+```
+Which provides the following value for `VA`, in mm.
+```matlab
+VA =
+  -33.2888
+    9.5519
+ -107.6801
+
 ```
 #### b
+The code used to solve the problem is the following
 ```matlab
-[-103.178892616916 -24.6992285382798 59.0787286518195] % mm
+%% Inputs
+V = [80, 60, 40]';
+
+dx1 = deg2rad(-27);
+dy1 = deg2rad(+65);
+
+DCM_b = eul2rotm([0, dy1, dx1], 'ZYX');
+V_b = DCM_b * V;
+VB = V_b - V;
+```
+Which provides the following value for `VB`, in mm.
+```matlab
+VB =
+  -38.5768
+   11.6200
+ -108.9543
 ```
 #### c
+The code used to solve the problem is the following
 ```matlab
-[1.218461432038678 -0.344063577593613	0.913003190918594 -0.219192673111922]
+%% Inputs
+
+dx1 = deg2rad(-27);
+dy1 = deg2rad(+65);
+
+DCM_b = eul2rotm([0, dy1, dx1], 'ZYX');
+
+[Ang_c, PRV_c] = epvFromDCM2(DCM_b);
+
+```
+Which provides the following values for `Ang_c`, in rad, and `PRV_c`.
+```matlab
+Ang_c =
+    1.2185
+
+PRV_c =
+   -0.3441
+    0.9130
+    0.2192
 ```
 #### d
 > Using blender, you design the shape with the sizes on the drawing.
@@ -18,9 +69,31 @@
 
 > **For b**, similar procedure but without doing double y for using always global.
 
-> **For c**, we get the rotation vector from our code and on the rotation side bar we select rotation by axis angle. There, we use the x,y,z coordinates and angle of the matlab code. We observe the same result. 
+> **For c**, we get the rotation vector from our code and on the rotation side bar we select rotation by axis angle. There, we use the x,y,z coordinates and angle of the matlab code. We observe the same result.
+
+
+![image](https://github.com/user-attachments/assets/18c96dab-7b87-40d8-9057-0e16e22ec330)
+
 
 > **These procedures validated all the results**.
+
+#### Note
+`eul2rotm` is a function provided by matlab but `epvFromDCM2` not. This is its implementation:
+```matlab
+function [angle, PRV] = epvFromDCM2(DCM)
+%EPVFROMDCM2 Summary of this function goes here
+%   Detailed explanation goes here
+[V, D] = eig(DCM); % V are eigenvectors, D is the diagonal matrix of eigenvalues
+
+% Find the eigenvector corresponding to the eigenvalue 1 (principal axis)
+[~, idx] = min(abs(diag(D) - 1)); % Find the index where eigenvalue is 1
+PRV = V(:, idx); % Extract the corresponding eigenvector
+
+% 2. Compute the rotation angle
+trace_DCM = trace(DCM); % Trace of the DCM matrix
+angle = acos((trace_DCM - 1) / 2); % Rotation angle in radians
+end
+```
 # E 2
 ```matlab
 [2.722002257670760 0.557236265353963	0.806880451497850	0.215675406315517]
