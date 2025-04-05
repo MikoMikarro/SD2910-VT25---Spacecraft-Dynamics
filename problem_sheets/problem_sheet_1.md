@@ -116,22 +116,58 @@ Which finish with the following results
 ```
 
 # E 3
-> Used $\Delta t$ of 0.01 s
+The code used to solve this problem is the following:
+```matlab
+%% Inputs
+initial_angles = deg2rad([10 20 40]);
+ang_vel = deg2rad([5 10 15]);
+tot_ang_vel = norm(ang_vel);
+q_ang_vel = quaternion(0, ang_vel(1), ang_vel(2), ang_vel(3));
+
+EP_0 = quaternion(epFromDCMSheppard(eul2rotm(initial_angles, 'ZYX'))); % <<<<<<< (a)
+dt = 0.01;
+tF = 60;
+nEls = tF/dt;
+
+%% Calculation
+t = linspace(0, tF, nEls);
+EP_n = EP_0;
+data = zeros([nEls, 4]);
+error = zeros([nEls,1]);
+% Simulation
+for i = 1:tF/dt
+    EP_n = EP_n + 0.5*EP_n*q_ang_vel*dt;
+    [a, b, c, d] = parts(EP_n);
+    data(i,:) = [a,b,c,d];
+    error(i) = norm(EP_n)-1;
+end
+
+EP_n; % <<<<<<< (b)
+error(end); % <<<<<<< (c)
+
+%% Comparison with exact solution
+EP_n_norm = EP_n / norm(EP_n);
+exact_sol = @(wV, w, t) quaternion(cos(w*t/2), (wV(1)/w)*sin(w*t/2), (wV(2)/w)*sin(w*t/2), (wV(3)/w)*sin(w*t/2));
+
+EP_p = exact_sol(ang_vel, norm(ang_vel), 60)*EP_0;
+total_error = norm(EP_p-EP_n_norm); % <<<<<<< (d)
+```
+
 #### a
 ```matlab
-quaternion(0.92707, 0.32132, 0.19191, 0.02149)
+0.92707 - 0.32132i - 0.19191j - 0.02149k
 ```
 #### b
 ```matlab
-quaternion(-0.79584, -0.44441, -0.26931, -0.33574)
+-0.94613 +  0.26338i - 0.092747j -  0.20735k
 ```
 #### c
 ```matlab
-0.008028251575302
+0.0080
 ```
 #### d
 ```matlab
-0.227172861394461
+0.2272
 ```
 # C 1
 #### a
@@ -160,4 +196,3 @@ quaternion(-0.79584, -0.44441, -0.26931, -0.33574)
 ![ai_problem](https://github.com/user-attachments/assets/9df51242-a0f0-4788-8062-439cee51a638)
 
 # A 2
-
