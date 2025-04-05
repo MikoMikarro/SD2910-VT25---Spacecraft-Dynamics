@@ -264,6 +264,7 @@ end
 ```
 
 # A 1
-![ai_problem](https://github.com/user-attachments/assets/9df51242-a0f0-4788-8062-439cee51a638)
+![a1_problem](https://github.com/user-attachments/assets/9df51242-a0f0-4788-8062-439cee51a638)
 
 # A 2
+![a2_problem](https://github.com/user-attachments/assets/106d5d11-e973-4eb8-8279-8284ce7d9071)
