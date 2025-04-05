@@ -155,11 +155,11 @@ total_error = norm(EP_p-EP_n_norm); % <<<<<<< (d)
 
 #### a
 ```matlab
-0.92707 - 0.32132i - 0.19191j - 0.02149k
+0.92707 -0.32132i -0.19191j -0.02149k
 ```
 #### b
 ```matlab
--0.94613 +  0.26338i - 0.092747j -  0.20735k
+-0.94613 +0.26338i -0.092747j -0.20735k
 ```
 #### c
 ```matlab
@@ -170,28 +170,99 @@ total_error = norm(EP_p-EP_n_norm); % <<<<<<< (d)
 0.2272
 ```
 # C 1
+The code used to solve the problem is the following:
+```matlab
+%% Inputs
+initialMRP = [0,0,0]';
+angVel = [-2, 1, 0.5]';
+tspan = [0 60];
+q0 = epFromRodrigues(initialMRP);
+
+der_mrp = @(mrp, ang) 0.25*((1-norm(mrp)^2)*ang+ 2*cross(mrp, ang)+ 2*mrp*(dot(mrp, ang)));
+
+options = odeset('RelTol', 1e-8, 'AbsTol', 1e-8);
+[t, q] = ode45(@(t, q) quaternion_derivative(q, angVel), tspan, q0, options);
+
+q_mrp = rodriguesFromEp(q(end,:)/norm(q(end,:))); % ---------- (a)
+
+error = []
+for i = 1:length(t)
+    error(i)=abs(norm(q(i,:))-1);
+end
+% plot(t, error);
+
+different_dt = [0.1, 0.01, 0.001];
+final_mrp = zeros([3, 3]);
+final_mrp_q = zeros([3, 4]);
+final_differences = zeros([3,1]);
+for i = 1:3
+    current_t = 0;
+    current_p = initialMRP;
+    while current_t < tspan(2)
+        current_p = current_p + der_mrp(current_p, angVel)*different_dt(i);
+        if norm(current_p) > 1
+            current_p = shadowRodriguesFromRodrigues(current_p);
+        end
+        current_t = current_t + different_dt(i);
+    end
+    final_mrp(i,:) = current_p; % ------- (b)
+    final_differences(i) = norm(q(end,:)-epFromRodrigues(current_p)); % ----- (c)
+end
+```
 #### a
 ```matlab
-[-0.596981307322530	0.298490653661265	0.149245326830633]
+q_mrp =
+    0.1662   -0.0831   -0.0416
 ```
 #### b
 ```matlab
 % 10⁻¹
-[-0.596735933523862	0.298367966761931	0.149183983380965]
+0.2029   -0.1014   -0.0507
 % 10⁻²
-[-0.597084818747906	0.298542409373953	0.149271204686977]
+0.1615   -0.0808   -0.0404
 % 10⁻³
-[-0.596991658916229	0.298495829458115	0.149247914729057]
+0.1657   -0.0829   -0.0414
 ```
+
 #### c
+
 ```matlab
 % 10⁻¹
-0.000766199120501840
+0.0803120556921397
 % 10⁻²
-0.000323159314320670
+0.0104756213489857
 % 10⁻³
-0.000032316960115536
+0.00111875657883155
 ```
+
+#### NOTE
+The functions used are the following:
+
+```matlab
+function dqdt = quaternion_derivative(q, omega)
+    qq = quaternion(q(1), q(2), q(3), q(4));
+    o = quaternion(0, omega(1), omega(2), omega(3));
+    dq = 0.5*qq*o;
+    [a0, a1, a2, a3] = dq.parts;
+    dqdt = [a0, a1, a2, a3]';
+
+end
+
+function [sh] = shadowRodriguesFromRodrigues(s)
+    s2 = s(1)^2 + s(2)^2 + s(3)^2;
+    sh = -s./s2;
+end
+
+function [b] = epFromRodrigues(s)
+    s2 = s(1)^2 + s(2)^2 + s(3)^2;
+    b = [1-s2 2*s(1) 2*s(2) 2*s(3)]./(1+s2);
+end
+
+function [s] = rodriguesFromEp(b)
+    s = [b(1+1) b(2+1) b(3+1)]./(1+b(0+1));
+end
+```
+
 # A 1
 ![ai_problem](https://github.com/user-attachments/assets/9df51242-a0f0-4788-8062-439cee51a638)
 
