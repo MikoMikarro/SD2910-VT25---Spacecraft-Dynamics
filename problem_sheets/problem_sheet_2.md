@@ -162,18 +162,27 @@ loss =
 
 # E 5
 Using the graphical solution ($\mathbf{H}$ pointing outwards) we end up with the following equations:
-$$ \mathbf{L} = \frac{\Delta \mathbf{H}}{\Delta t}; \qquad \Delta \mathbf{H} = \mathbf{H}_1 - \mathbf{H}_0$$
-$$ \mathbf{H}_0 = H\hat{\mathbf{z}}; \qquad \mathbf{H}_1 = H\cos \theta \hat{\mathbf{z}} + H \sin \theta \hat{\mathbf{x}}$$
+
+$$\mathbf{L} = \frac{\Delta \mathbf{H}}{\Delta t}; \qquad \Delta \mathbf{H} = \mathbf{H}_1 - \mathbf{H}_0$$
+
+$$\mathbf{H}_0 = H\hat{\mathbf{z}}; \qquad \mathbf{H}_1 = H\cos \theta \hat{\mathbf{z}} + H \sin \theta \hat{\mathbf{x}}$$
+
 $$\theta = \dot{\theta} \Delta t; \quad \dot{\theta} = \frac{2\pi}{T}$$
 
 Being a stationary orbit, T = 24h, therefore $\dot{\theta}$ becomes a very small value. If we also end with a very small value of $\Delta t$, the moment equation can be approximated to:
-$$  \mathbf{L} = \frac{\Delta \mathbf{H}}{\Delta t} = \frac{ H\cos \theta \hat{\mathbf{z}} + H \sin \theta \hat{\mathbf{x}} - H\hat{\mathbf{z}}}{\Delta t} \approx \frac{ H\hat{\mathbf{z}} + H \dot{\theta}\Delta t \hat{\mathbf{x}} - H\hat{\mathbf{z}}}{\Delta t}= H\dot{\theta} \hat{\mathbf{x}} $$
+
+$$\mathbf{L} = \frac{\Delta \mathbf{H}}{\Delta t} = \frac{ H\cos \theta \hat{\mathbf{z}} + H \sin \theta \hat{\mathbf{x}} - H\hat{\mathbf{z}}}{\Delta t} \approx \frac{ H\hat{\mathbf{z}} + H \dot{\theta}\Delta t \hat{\mathbf{x}} - H\hat{\mathbf{z}}}{\Delta t}= H\dot{\theta} \hat{\mathbf{x}}$$
+
 $$L  = H \dot{\theta} = I_s\omega_s \cdot \frac{2 \pi}{24 \cdot 60 \cdot 60} = 13.708\quad \text{N m}$$
+
 Expressed from the orbital frame.
 
-#### Using the transport theorem
-$$ \left( \frac{d\mathbf{H}}{dt} \right)_{\text{inertial}} = \left( \frac{d\mathbf{H}}{dt} \right)_{\text{orbital}} + \boldsymbol{\omega}_{\text{orb}} \times \mathbf{H} $$
+**Using the transport theorem**:
 
-Since we want the spin axis to stay fixed in the orbital frame $\left( \frac{d\mathbf{H}}{dt} \right)_{\text{orbital}} = 0$ so:
-$$\mathbf{L} =\boldsymbol{\omega}_{\text{orb}} \times \mathbf{H} $$
-Which is the same result we got before as $\boldsymbol{\omega}_{\text{orb}}$ has the value $\dot{\theta}\hat{\mathbf{y}}$, still expressed on the orbital frame.
+$$\left( \frac{d \mathbf{H}}{dt} \right)\_{\text{inertial}} = \left(\frac{d\mathbf{H}}{dt} \right)\_{\text{orbital}} + \boldsymbol{\omega}\_{\text{orb}} \times \mathbf{H}$$
+
+Since we want the spin axis to stay fixed in the orbital frame $\left( \frac{d\mathbf{H}}{dt} \right)\_{\text{orbital}} = 0$ so:
+
+$$\mathbf{L} =\boldsymbol{\omega}_{\text{orb}} \times \mathbf{H}$$
+
+Which is the same result we got before as $\boldsymbol{\omega}_{\text{orb}}$ has the value $\dot{\theta}\hat{\mathbf{y}}$ , still expressed on the orbital frame.
