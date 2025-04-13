@@ -12,17 +12,15 @@ w = deg2rad([15, 5, -10])'; % rad / s
 
 %% Calculations
 % (a)
-w2_dot = -((I11-I33)/I22)*w(3)*w(1);
-w3_dot = -((I22-I11)/I33)*w(2)*w(1);
-T_p2 = abs(2*pi/w2_dot)
-T_p3 = abs(2*pi/w3_dot)
+wp = ((I11/I22) - 1) * w(1);
+T_p = abs(2*pi/wp)
 % (b)
 w_23 = sqrt(w(2)^2 + w(3)^2)
 ```
 #### a
 ```matlab
-T_p2 =          T_p3 =
-  206.2648 s        412.5296 s
+T_p =
+    36 s
 ```
 #### b
 ```matlab
