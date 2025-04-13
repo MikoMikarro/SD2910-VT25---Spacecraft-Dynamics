@@ -184,3 +184,25 @@ Since we want the spin axis to stay fixed in the orbital frame $\left( \frac{d\m
 $$\mathbf{L} =\boldsymbol{\omega}_{\text{orb}} \times \mathbf{H}$$
 
 Which is the same result we got before as $\boldsymbol{\omega}_{\text{orb}}$ has the value $\dot{\theta}\hat{\mathbf{y}}$ , still expressed on the orbital frame.
+
+# E 6
+The code used to solve this problem is the following:
+```matlab
+%% Inputs
+IS = 1000; % kg m²
+IG = 6000; % kg m²
+
+ws_0 = 0.4; % rad/s
+a = deg2rad(20); % rad
+
+%% Calculations
+H0 = IS * ws_0;
+H1 = H0 / cos(a);
+precession_rate = -H1/IG; % (4-77a, page 170)
+t = abs(pi / precession_rate); % 180º in rad
+```
+Solution:
+```matlab
+t =
+    44.2820 s
+```
