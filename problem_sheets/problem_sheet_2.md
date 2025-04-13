@@ -52,14 +52,17 @@ err = abs(c_state(:, 1).^2 + c_state(:, 2).^2 + c_state(:, 3).^2 + c_state(:, 4)
 %% Functions
 
 function dqdt = quaternion_derivative(state, inertia)
-    % Reshape q to ensure it's a column vector
+    % Split state on its components
     q = state(1:4);
     omega = state(5:7);
     q1 = quaternion(q(1), q(2), q(3), q(4));
     o = quaternion(0, omega(1), omega(2), omega(3));
+
+    % Quaternion derivative
     dq = 0.5*q1*o;
     [a0, a1, a2, a3] = dq.parts;
 
+    % Omega derivative
     I11 = inertia(1);
     I22 = inertia(2);
     I33 = inertia(3);
@@ -67,7 +70,6 @@ function dqdt = quaternion_derivative(state, inertia)
     w1 = -(I33-I22)*omega(2)*omega(3)/I11;
     w2 = -(I11-I33)*omega(3)*omega(1)/I22;
     w3 = -(I22-I11)*omega(1)*omega(2)/I33;
-    
 
     dqdt = [a0, a1, a2, a3, w1, w2, w3]';
 
