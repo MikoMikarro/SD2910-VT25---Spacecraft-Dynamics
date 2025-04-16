@@ -208,3 +208,83 @@ Solution:
 t =
     44.2820 s
 ```
+
+# C 1
+The code used to solve problem **d** and **e** is the following:
+```matlab
+clear all; clc; close all;
+addpath('./rotLib/')
+%% Inputs
+I1 = 2000; % kg m²
+I2 = 1500; % kg m²
+I3 = 1000; % kg m²
+Is = 18;   % kg m²
+vd = 30;   % N m s
+
+statics = [I1 I2 I3 Is vd];
+
+% initial_state: w1, w2, w3, sig1, sig2, sig3 rad/s
+initial_state_d = [0.1224, 0, 2.99, 0, 0, 0];
+initial_state_e = [0.125, 0, 2.99, 0, 0, 0];
+
+%% Calculations
+
+% (d) 
+tspan = [0 2000];
+options = odeset('RelTol', 1e-8, 'AbsTol', 1e-8);
+[t, c_state] = ode45(@(t, s) state_derivative(s, statics), tspan, initial_state_d, options);
+% [t, c_state] = ode45(@(t, s) state_derivative(s, statics), tspan, initial_state);
+a_m = @(s) angular_moment(s, statics);
+result = cellfun(a_m, num2cell(c_state, 2));
+figure();
+plot(t, result);
+end_d = c_state(end, :)
+
+% (e) 
+tspan = [0 2000];
+options = odeset('RelTol', 1e-8, 'AbsTol', 1e-8);
+[t, c_state] = ode45(@(t, s) state_derivative(s, statics), tspan, initial_state_e, options);
+% [t, c_state] = ode45(@(t, s) state_derivative(s, statics), tspan, initial_state);
+a_m = @(s) angular_moment(s, statics);
+result = cellfun(a_m, num2cell(c_state, 2));
+figure();
+plot(t, result);
+
+end_e = c_state(end, :)
+%% Function
+
+function dsdt = state_derivative(state, statics)
+    I1 = statics(1);
+    I2 = statics(2);
+    I3 = statics(3);
+    Is = statics(4);
+    vd = statics(5);
+
+    w = state(1:3);
+    sig = state(4:6);
+
+    wd1 = ((I2-I3)*w(2)*w(3)+vd*sig(1))/(I1-Is);
+    wd2 = ((I3-I1)*w(3)*w(1)+vd*sig(2))/(I2-Is);
+    wd3 = ((I1-I2)*w(1)*w(2)+vd*sig(3))/(I3-Is);
+    
+    sigd1 = -wd1 - (vd/Is)*sig(1) - w(2)*sig(3) + w(3)*sig(2);
+    sigd2 = -wd2 - (vd/Is)*sig(2) - w(3)*sig(1) + w(1)*sig(3);
+    sigd3 = -wd3 - (vd/Is)*sig(3) - w(1)*sig(2) + w(2)*sig(1);
+
+    dsdt = [wd1, wd2, wd3, sigd1, sigd2, sigd3]';
+
+end
+
+function H = angular_moment(state, statics)
+    I1 = statics(1);
+    I2 = statics(2);
+    I3 = statics(3);
+    Is = statics(4);
+
+    w = state(1:3);
+    sig = state(4:6);
+    
+    H2 = (I1*w(1) + Is*sig(1))^2 + (I2*w(2) + Is*sig(2))^2 + (I3*w(3) + Is*sig(3))^2;
+    H = sqrt(H2);
+end
+```
