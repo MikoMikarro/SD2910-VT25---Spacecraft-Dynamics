@@ -122,52 +122,70 @@ The code used to solve this problem is the following:
 initial_angles = deg2rad([10 20 40]);
 ang_vel = deg2rad([5 10 15]);
 tot_ang_vel = norm(ang_vel);
-q_ang_vel = quaternion(0, ang_vel(1), ang_vel(2), ang_vel(3));
 
-EP_0 = quaternion(epFromDCMSheppard(eul2rotm(initial_angles, 'ZYX'))); % <<<<<<< (a)
-dt = 0.01;
-tF = 60;
-nEls = tF/dt;
+EP_0 = epFromDCMSheppard(eul2rotm(initial_angles, 'ZYX'))'; % <<<<<<<<< (a)
 
 %% Calculation
-t = linspace(0, tF, nEls);
-EP_n = EP_0;
-data = zeros([nEls, 4]);
-error = zeros([nEls,1]);
-% Simulation
-for i = 1:tF/dt
-    EP_n = EP_n + 0.5*EP_n*q_ang_vel*dt;
-    [a, b, c, d] = parts(EP_n);
-    data(i,:) = [a,b,c,d];
-    error(i) = norm(EP_n)-1;
-end
+tspan = [0 60];
+[t, EP_n] = ode45(@(t, s) quaternion_derivative(s, ang_vel), tspan, EP_0);
+EP_n_norm = quaternion(EP_n(end,:))./ norm(EP_n(end,:)); % <<<<<<<<<<<< (b)
 
-EP_n; % <<<<<<< (b)
-error(end); % <<<<<<< (c)
+relative_error = abs(vecnorm(EP_n, 2, 2) - 1); % <<<<<<<<<<<<<<<<<<<<<< (c)
+
+figure()
+hold on
+plot(t, relative_error); % Increases slowly but never goes over E-4
+yscale(gca,'log')
+hold off
 
 %% Comparison with exact solution
-EP_n_norm = EP_n / norm(EP_n);
-exact_sol = @(wV, w, t) quaternion(cos(w*t/2), (wV(1)/w)*sin(w*t/2), (wV(2)/w)*sin(w*t/2), (wV(3)/w)*sin(w*t/2));
 
-EP_p = exact_sol(ang_vel, norm(ang_vel), 60)*EP_0;
-total_error = norm(EP_p-EP_n_norm); % <<<<<<< (d)
+EP_p = quaternion(exact_solution(EP_0, ang_vel, 60)');
+exact_to_integrated_error = norm(EP_p - EP_n_norm); % <<<<<<<<<<<<<<<<< (d)
+
+
+function dqdt = quaternion_derivative(state, o)
+    q = state(1:4);
+
+    a0 = -o(1)*q(2) - o(2)*q(3) - o(3)*q(4);
+    a1 =  o(1)*q(1) + o(3)*q(3) - o(2)*q(4);
+    a2 =  o(2)*q(1) - o(3)*q(2) + o(1)*q(4);
+    a3 =  o(3)*q(1) + o(2)*q(2) - o(1)*q(3);
+
+    dqdt = 0.5* [a0, a1, a2, a3]';
+
+end
+
+function qf = exact_solution(state, o, t)
+    M = [ 0   -o(1) -o(2) -o(3)
+         o(1)   0    o(3) -o(2)
+         o(2) -o(3)   0    o(1)
+         o(3)  o(2) -o(1)   0] .* 0.5;
+    w = sqrt(o(1)^2 + o(2)^2 + o(3)^2);
+
+    qf = (eye(4)*cos(w*t/2)+(2/w)*M*sin(w*t/2))*state;
+end
 ```
 
 #### a
 ```matlab
-0.92707 -0.32132i -0.19191j -0.02149k
+EP_0 = 
+  0.92707 - 0.32132i - 0.19191j - 0.02149k
 ```
 #### b
 ```matlab
--0.94613 +0.26338i -0.092747j -0.20735k
+EP_n_norm =
+  -0.93848 +  0.26112i - 0.092583j -  0.20614k
 ```
 #### c
 ```matlab
-0.0080
+relative_error(end) =
+   2.4648e-04
 ```
 #### d
 ```matlab
-0.2272
+exact_to_integrated_error =
+   7.4160e-04
 ```
 # C 1
 The code used to solve the problem is the following:
