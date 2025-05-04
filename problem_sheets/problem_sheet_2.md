@@ -288,3 +288,45 @@ function H = angular_moment(state, statics)
     H = sqrt(H2);
 end
 ```
+# C 2
+```matlab
+clear all; clc; close all;
+addpath('./rotLib/')
+%% Inputs
+% Inertia of the gimball
+I_g_a = 0.1;        % kgm²
+I_g_t = 0.05;       % kgm²
+w_g = 1E+04;        % rad/s
+I_g = [I_g_t   0     0
+         0   I_g_t   0
+         0     0   I_g_a];
+
+% Inertia of the rocket
+I_r_a = 1E+03;      % kgm²
+I_r_t = 1E+04;      % kgm²
+w_r = 10;           % rad/s
+I_r = [I_r_a   0     0
+         0   I_r_t   0
+         0     0   I_r_t];
+%% Calculations
+HR = I_r * [w_r, 0 ,0]';
+
+HG = I_g * [0, 0, w_g]';
+
+
+finalH = HR + HG;
+fHmag = norm(finalH);
+
+finalI = I_r + I_g;
+finalw = (finalI^-1)*finalH;
+
+% Asuming I2 = I3
+precession_rate = -fHmag/I_r_t; % (4-77a, page 170)
+time = 2*pi/precession_rate;
+
+% max angle  % (4-79, page 171)
+theta = asin(-(finalI(1,1)*finalw(1))/(finalI(2,2)*precession_rate));
+max_angle = pi/2 - theta;
+```
+# A 1
+![p2a1](https://github.com/user-attachments/assets/eb6b4c51-6249-4cfe-bd40-2f60f7aa7e5b)
