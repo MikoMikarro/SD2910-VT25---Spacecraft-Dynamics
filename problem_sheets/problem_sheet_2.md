@@ -210,6 +210,51 @@ t =
 ```
 
 # C 1
+## a
+### Jacobian
+$$
+A = \begin{pmatrix}
+0 & \frac{I_2 - I_3}{I_1 - I_s} \omega_3 & \frac{I_2 - I_3}{I_1 - I_s} \omega_2 & \frac{v_d}{I_1 - I_s} & 0 & 0 \\
+\frac{I_3 - I_1}{I_2 - I_s} \omega_3 & 0 & \frac{I_3 - I_1}{I_2 - I_s} \omega_1 & 0 & \frac{v_d}{I_2 - I_s} & 0 \\
+\frac{I_1 - I_2}{I_3 - I_s} \omega_2 & \frac{I_1 - I_2}{I_3 - I_s} \omega_1 & 0 & 0 & 0 & \frac{v_d}{I_3 - I_s} \\
+0 & -\sigma_3 & \sigma_2 & -\frac{v_d}{I_s} & \omega_3 & -\omega_2 \\
+\sigma_3 & 0 & -\sigma_1 & -\omega_3 & -\frac{v_d}{I_s} & \omega_1 \\
+-\sigma_2 & \sigma_1 & 0 & \omega_2 & -\omega_1 & -\frac{v_d}{I_s}
+\end{pmatrix}
+$$
+
+Given the Jacobian $A$, we can now compute the eigen values and estimate the stabiltiy of the system on the different points.
+```matlab
+eigen_a =
+    0.0000 −1.6894+0.9955i −1.6894−0.9955i −0.0054 0.0000 −1.6818
+```
+As all real parts of the eigen values are negative, we are at a stable point.
+## b
+```matlab
+eigen_b =
+    0.0000 −1.6972 0.0014+0.4087i 0.0014−0.4087i −1.6858+1.0040i −1.6858−1.0040i
+```
+As the 3rd and 4th components have real positive parts, we are not at a stable point.
+## c
+```matlab
+eigen_c =
+   0.3584 -0.3584 -1.6667-1.0000i  -1.6667+1.0000i   0.0000 -1.6667
+```
+Similar to part b, we still have real positive eigenvalues, therefore, we are not at a stable point
+## d
+### Trajectory:
+![image](https://github.com/user-attachments/assets/207fa03d-ca4b-4e5b-9dfc-24a520be8f46)
+
+### Angular momentum magnitude:
+![image](https://github.com/user-attachments/assets/0a2ae659-5645-448d-92f3-b7b8fb250f0f)
+## e
+### Trajectory:
+![image](https://github.com/user-attachments/assets/90da3f3e-9550-4bc3-9b2c-325e46df69b0)
+
+### Angular momentum magnitude:
+![image](https://github.com/user-attachments/assets/3289f81b-7f97-4d81-9667-7dbde7286ef3)
+
+## Code
 The code used to solve problem **d** and **e** is the following:
 ```matlab
 clear all; clc; close all;
@@ -289,6 +334,8 @@ function H = angular_moment(state, statics)
 end
 ```
 # C 2
+
+## a
 ```matlab
 clear all; clc; close all;
 addpath('./rotLib/')
@@ -327,6 +374,22 @@ time = 2*pi/precession_rate;
 % max angle  % (4-79, page 171)
 theta = asin(-(finalI(1,1)*finalw(1))/(finalI(2,2)*precession_rate));
 max_angle = pi/2 - theta;
+
+% Since the rocket axis of symmetry is rotating around H
+% the maximum angular deviation is:
+max_angle*2 % rad
+```
+
+```matlab
+max_angle*2 =
+    0.1994
 ```
 # A 1
+## Calculation
 ![p2a1](https://github.com/user-attachments/assets/eb6b4c51-6249-4cfe-bd40-2f60f7aa7e5b)
+## Sketch of the spacecraft axis
+![image](https://github.com/user-attachments/assets/6d1c4696-0b08-4ff9-9599-6db988f75b09)
+## Energy validation
+![p2a1_graph](https://github.com/user-attachments/assets/4eb09495-cf06-40a2-bae6-7d685055569a)
+
+# A 2
