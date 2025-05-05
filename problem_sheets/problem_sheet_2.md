@@ -108,25 +108,29 @@ loss = T_0-T_1; % J
 ```
 
 #### a
+
 ```matlab
 w_1 =
     0.7500 rad/s
 ```
 #### b
+
 ```matlab
 loss =
     5.0781 kJ
 ```
 #### c
+
 For this transfer of energy to occur, some active system must actively create the internal torque, therefore consuming energy. As can be seen from the equations, the lack of external torque only implies a conservation of the angular moment, not kinetic energy. Other kind of **internal** energy must be used for the operation.
 
 # E 4
+
 The code used to solve the problem is the following
 
 ```matlab
 %% Inputs
 IS = [60 60 80]; % kg m²
-wz_0 = 2; % rad s⁻¹
+wz_0 = 2; % rad s^-1
 
 a = deg2rad(15); % rad
 
@@ -150,17 +154,20 @@ loss = T_0-T_1; % J
 ```
 
 #### a
+
 ```matlab
 wz_1 =
     2.0706 rad /s
 ```
 #### b
+
 ```matlab
 loss =
    19.1458 J
 ```
 
 # E 5
+
 Using the graphical solution ($\mathbf{H}$ pointing outwards) we end up with the following equations:
 
 $$\mathbf{L} = \frac{\Delta \mathbf{H}}{\Delta t}; \qquad \Delta \mathbf{H} = \mathbf{H}_1 - \mathbf{H}_0$$
@@ -188,7 +195,9 @@ $$\mathbf{L} =\boldsymbol{\omega}_{\text{orb}} \times \mathbf{H}$$
 Which is the same result we got before as $\boldsymbol{\omega}_{\text{orb}}$ has the value $\dot{\theta}\hat{\mathbf{y}}$ , still expressed on the orbital frame.
 
 # E 6
+
 The code used to solve this problem is the following:
+
 ```matlab
 %% Inputs
 IS = 1000; % kg m²
@@ -203,15 +212,20 @@ H1 = H0 / cos(a);
 precession_rate = -H1/IG; % (4-77a, page 170)
 t = abs(pi / precession_rate); % 180º in rad
 ```
-Solution:
+
+### Solution:
+
 ```matlab
 t =
     44.2820 s
 ```
 
 # C 1
+
 ## a
+
 ### Jacobian
+
 $$
 A = \begin{pmatrix}
 0 & \frac{I_2 - I_3}{I_1 - I_s} \omega_3 & \frac{I_2 - I_3}{I_1 - I_s} \omega_2 & \frac{v_d}{I_1 - I_s} & 0 & 0 \\
@@ -224,35 +238,51 @@ A = \begin{pmatrix}
 $$
 
 Given the Jacobian $A$, we can now compute the eigen values and estimate the stabiltiy of the system on the different points.
+
 ```matlab
 eigen_a =
-    0.0000 −1.6894+0.9955i −1.6894−0.9955i −0.0054 0.0000 −1.6818
+    0.0000 -1.6894+0.9955i -1.6894-0.9955i -0.0054 0.0000 -1.6818
 ```
+
 As all real parts of the eigen values are negative, we are at a stable point.
+
 ## b
+
 ```matlab
 eigen_b =
-    0.0000 −1.6972 0.0014+0.4087i 0.0014−0.4087i −1.6858+1.0040i −1.6858−1.0040i
+    0.0000 -1.6972 0.0014+0.4087i 0.0014-0.4087i -1.6858+1.0040i -1.6858-1.0040i
 ```
+
 As the 3rd and 4th components have real positive parts, we are not at a stable point.
+
 ## c
+
 ```matlab
 eigen_c =
    0.3584 -0.3584 -1.6667-1.0000i  -1.6667+1.0000i   0.0000 -1.6667
 ```
+
 Similar to part b, we still have real positive eigenvalues, therefore, we are not at a stable point
+
 ## d
+
 ### Trajectory:
-![image](https://github.com/user-attachments/assets/207fa03d-ca4b-4e5b-9dfc-24a520be8f46)
+
+![Trajectory d)](https://github.com/user-attachments/assets/207fa03d-ca4b-4e5b-9dfc-24a520be8f46)
 
 ### Angular momentum magnitude:
-![image](https://github.com/user-attachments/assets/0a2ae659-5645-448d-92f3-b7b8fb250f0f)
+
+![Angular momentum magnitude d)](https://github.com/user-attachments/assets/0a2ae659-5645-448d-92f3-b7b8fb250f0f)
+
 ## e
+
 ### Trajectory:
-![image](https://github.com/user-attachments/assets/90da3f3e-9550-4bc3-9b2c-325e46df69b0)
+
+![Trajectory e)](https://github.com/user-attachments/assets/90da3f3e-9550-4bc3-9b2c-325e46df69b0)
 
 ### Angular momentum magnitude:
-![image](https://github.com/user-attachments/assets/3289f81b-7f97-4d81-9667-7dbde7286ef3)
+
+![Angular momentum magnitude: e)](https://github.com/user-attachments/assets/3289f81b-7f97-4d81-9667-7dbde7286ef3)
 
 ## Code
 The code used to solve problem **d** and **e** is the following:
@@ -333,9 +363,11 @@ function H = angular_moment(state, statics)
     H = sqrt(H2);
 end
 ```
+
 # C 2
 
 ## a
+
 ```matlab
 clear all; clc; close all;
 addpath('./rotLib/')
@@ -377,32 +409,45 @@ max_angle = pi/2 - theta;
 
 % Since the rocket axis of symmetry is rotating around H
 % the maximum angular deviation is:
-max_angle*2 % rad
+max_angle*2
+```
+```matlab
+time = 
+    6.2520  % s
 ```
 
 ```matlab
 max_angle*2 =
-    0.1994
+    0.1994 % rad
 ```
+
 # A 1
+
 ## Calculation
+
 ![p2a1](https://github.com/user-attachments/assets/eb6b4c51-6249-4cfe-bd40-2f60f7aa7e5b)
+
 ## Sketch of the spacecraft axis
-![image](https://github.com/user-attachments/assets/6d1c4696-0b08-4ff9-9599-6db988f75b09)
+
+![Sketch of the spacecraft axis](https://github.com/user-attachments/assets/6d1c4696-0b08-4ff9-9599-6db988f75b09)
+
 ## Energy validation
-![p2a1_graph](https://github.com/user-attachments/assets/4eb09495-cf06-40a2-bae6-7d685055569a)
+
+![Energy validation](https://github.com/user-attachments/assets/4eb09495-cf06-40a2-bae6-7d685055569a)
+
 ## Comment
 The significant decrease of axial inertia compared to the transverse one would have implied a significant increment in the angle. However, due to the spending of internal energy to convert it into kinetic energy, the angle was decreased as these devices usually intend.
+
 # A 2
 Defining $\theta$ as the angle between $\omega$ and the axis of symmetry $\hat{i}$:
 
-$$\symbf{H} = H_a \hat{i} + H_t \hat{t}\ ; \qquad \boldsymbol{\omega}= \omega_a \hat{i} + \omega_t\hat{t}\ ;\qquad \omega_a = w \cos \theta\ ;\quad w_t = w \sin \theta$$
+$$ \boldsymbol{H} = H_a \hat{i} + H_t \hat{t}\ ; \qquad \boldsymbol{\omega}= \omega_a \hat{i} + \omega_t\hat{t}\ ;\qquad \omega_a = w \cos \theta\ ;\quad w_t = w \sin \theta $$
 
 $$I_a=kI_t; \qquad H_a = I_a\omega_a = kI_t\omega_a; \quad H_t = I_t\omega_t$$
 
-Now, using the dot product we can find the angle between $\symbf{H}$ and $\boldsymbol{\omega}$.
+Now, using the dot product we can find the angle between $\boldsymbol{H}$ and $\boldsymbol{\omega}$.
 
-$$\cos \beta = \frac{\symbf{H}\cdot \boldsymbol{\omega}}{|\symbf{H}||\boldsymbol{\omega}|}$$
+$$\cos \beta = \frac{\boldsymbol{H}\cdot \boldsymbol{\omega}}{|\boldsymbol{H}||\boldsymbol{\omega}|}$$
 
 The maximum value happens at the minimum value of the content inside, given $f$:
 
@@ -411,7 +456,7 @@ $$f(\theta) = \frac{k\cdot\cos^2(\theta) + sin^2(\theta)}{\sqrt{k^2\cdot\cos^2(\
 $$f'(\theta)= \frac{\left(k - 1\right)^{2} \cos\left(\theta\right) \sin\left(\theta\right) \left(\sin^{2}\left(\theta\right) - k \cos^{2}\left(\theta\right)\right)}{\left(\sin^{2}\left(\theta\right) + k^{2} \cos^{2}\left(\theta\right)\right)^{\frac{3}{2}}}$$
 
 Which is 0 for the value: 0.886077, getting us $\beta = 11.5369590328º$
-We can know this maximum exists as the $f’$ is positive and $f= 0$ at $\theta = 0$ and  $f’$ is positive and $f= 0$ at $\theta = \frac{\pi}{2}$. As both functions are continuous. We know that there is a point in the middle where $f’$ is 0 and $f’’$ needs to be negative. The range of values of $\theta$ goes from 0 to $\frac{\pi}{2}$ as higher values are equivalent in terms of symmetry. 
+We can know this maximum exists as the $f’$ is positive and $f= 0$ at $\theta = 0$ and  $f'$ is positive and $f= 0$ at $\theta = \frac{\pi}{2}$. As both functions are continuous. We know that there is a point in the middle where $f'$ is 0 and $f''$ needs to be negative. The range of values of $\theta$ goes from 0 to $\frac{\pi}{2}$ as higher values are equivalent in terms of symmetry. 
 
 The kinetic energy at the largest value of $\beta$ is given by:
 
