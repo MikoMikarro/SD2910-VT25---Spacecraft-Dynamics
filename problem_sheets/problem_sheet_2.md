@@ -391,5 +391,28 @@ max_angle*2 =
 ![image](https://github.com/user-attachments/assets/6d1c4696-0b08-4ff9-9599-6db988f75b09)
 ## Energy validation
 ![p2a1_graph](https://github.com/user-attachments/assets/4eb09495-cf06-40a2-bae6-7d685055569a)
-
+## Comment
+The significant decrease of axial inertia compared to the transverse one would have implied a significant increment in the angle. However, due to the spending of internal energy to convert it into kinetic energy, the angle was decreased as these devices usually intend.
 # A 2
+Defining $\theta$ as the angle between $\omega$ and the axis of symmetry $\hat{i}$:
+
+$$\symbf{H} = H_a \hat{i} + H_t \hat{t}\ ; \qquad \boldsymbol{\omega}= \omega_a \hat{i} + \omega_t\hat{t}\ ;\qquad \omega_a = w \cos \theta\ ;\quad w_t = w \sin \theta$$
+
+$$I_a=kI_t; \qquad H_a = I_a\omega_a = kI_t\omega_a; \quad H_t = I_t\omega_t$$
+
+Now, using the dot product we can find the angle between $\symbf{H}$ and $\boldsymbol{\omega}$.
+
+$$\cos \beta = \frac{\symbf{H}\cdot \boldsymbol{\omega}}{|\symbf{H}||\boldsymbol{\omega}|}$$
+
+The maximum value happens at the minimum value of the content inside, given $f$:
+
+$$f(\theta) = \frac{k\cdot\cos^2(\theta) + sin^2(\theta)}{\sqrt{k^2\cdot\cos^2(\theta)+sin^2(\theta)}}$$
+
+$$f'(\theta)= \frac{\left(k - 1\right)^{2} \cos\left(\theta\right) \sin\left(\theta\right) \left(\sin^{2}\left(\theta\right) - k \cos^{2}\left(\theta\right)\right)}{\left(\sin^{2}\left(\theta\right) + k^{2} \cos^{2}\left(\theta\right)\right)^{\frac{3}{2}}}$$
+
+Which is 0 for the value: 0.886077, getting us $\beta = 11.5369590328º$
+We can know this maximum exists as the $f’$ is positive and $f= 0$ at $\theta = 0$ and  $f’$ is positive and $f= 0$ at $\theta = \frac{\pi}{2}$. As both functions are continuous. We know that there is a point in the middle where $f’$ is 0 and $f’’$ needs to be negative. The range of values of $\theta$ goes from 0 to $\frac{\pi}{2}$ as higher values are equivalent in terms of symmetry. 
+
+The kinetic energy at the largest value of $\beta$ is given by:
+
+$$ \cos \beta = \frac{2T}{Hw}$$
