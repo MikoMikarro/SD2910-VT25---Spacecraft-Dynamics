@@ -1,6 +1,6 @@
 # E 1
-![p3e1_eq](https://github.com/MikoMikarro/SD2910-VT25---Spacecraft-Dynamics/blob/main/problem_sheets/p3e1_equations.png)
-![p3e1_plots](https://github.com/MikoMikarro/SD2910-VT25---Spacecraft-Dynamics/blob/main/problem_sheets/p3e1_plots.png)
+![p3e1_eq](https://github.com/MikoMikarro/SD2910-VT25---Spacecraft-Dynamics/blob/main/problem_sheets/p3e1_equations.png?raw=true)
+![p3e1_plots](https://github.com/MikoMikarro/SD2910-VT25---Spacecraft-Dynamics/blob/main/problem_sheets/p3e1_plots.png?raw=true)
 # E 2
 
 We start with the code provided in `EulerEqsExample` and `Euler`, and add the control law. To get the gain values, I defined a desired decay rate $T$ and got from gain values for a critically damped system:
@@ -9,7 +9,7 @@ $$P_i = \frac{2 I_i}{T}; \qquad K_i = \frac{P^2}{I_i}$$
 
 We can validate the control law by plotting the error $\varepsilon$ in a semi-log plot and comparing it with the expected decay rate given the desired decay rate.
 
-![p3e2_plots](https://github.com/MikoMikarro/SD2910-VT25---Spacecraft-Dynamics/blob/main/problem_sheets/p3e2_plots.png)
+![p3e2_plots](https://github.com/MikoMikarro/SD2910-VT25---Spacecraft-Dynamics/blob/main/problem_sheets/p3e2_plots.png?raw=true)
 
 # C 1
 
@@ -23,7 +23,7 @@ For the values of the $K_i$ and $P_i$, I used the same strategy used in E2. Then
 
 The following plot shows the difference in response between the two cases.
 
-![p3c1_plots](https://github.com/MikoMikarro/SD2910-VT25---Spacecraft-Dynamics/blob/main/problem_sheets/p3c1_plots.png)
+![p3c1_plots](https://github.com/MikoMikarro/SD2910-VT25---Spacecraft-Dynamics/blob/main/problem_sheets/p3c1_plots.png?raw=true)
 
 ## c 
 
@@ -91,7 +91,7 @@ $$K_i = \frac{4I_i}{T^2}$$
 
 As we can see from the analytical performance, when $T$ is much smaller than the natural period of the reference trajectory, the performance is very good:
 
-![p3a1_plots](https://github.com/MikoMikarro/SD2910-VT25---Spacecraft-Dynamics/blob/main/problem_sheets/p3a1_plots.png)
+![p3a1_plots](https://github.com/MikoMikarro/SD2910-VT25---Spacecraft-Dynamics/blob/main/problem_sheets/p3a1_plots.png?raw=true)
 
 # A 2
 
@@ -101,4 +101,4 @@ $$\boldsymbol{u} = -K_p \beta - K_d \beta - z; \quad z = K_i \int_0^t \beta$$
 
 After modifying the code to provide that control law and using the dynamics learned from the previous problem sheets, the following result shows the system was able to reach the desired steady state.
 
-![p3a2_plots](https://github.com/MikoMikarro/SD2910-VT25---Spacecraft-Dynamics/blob/main/problem_sheets/p3a2_plots.png)
+![p3a2_plots](https://github.com/MikoMikarro/SD2910-VT25---Spacecraft-Dynamics/blob/main/problem_sheets/p3a2_plots.png?raw=true)
