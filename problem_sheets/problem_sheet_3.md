@@ -1,6 +1,12 @@
 # E 1
+
 ![p3e1_eq](https://github.com/MikoMikarro/SD2910-VT25---Spacecraft-Dynamics/blob/main/problem_sheets/p3e1_equations.png?raw=true)
+
+\newpage 
+
 ![p3e1_plots](https://github.com/MikoMikarro/SD2910-VT25---Spacecraft-Dynamics/blob/main/problem_sheets/p3e1_plots.png?raw=true)
+
+
 # E 2
 
 We start with the code provided in `EulerEqsExample` and `Euler`, and add the control law. To get the gain values, I defined a desired decay rate $T$ and got from gain values for a critically damped system:
