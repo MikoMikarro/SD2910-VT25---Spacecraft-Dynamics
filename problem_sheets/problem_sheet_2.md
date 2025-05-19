@@ -1,3 +1,6 @@
+---
+geometry: left=1in,right=1in,top=1in,bottom=1in
+---
 > All codes are matlab codes
 
 # E 1
@@ -84,12 +87,13 @@ The code used to solve the problem is the following
 
 ```matlab
 %% Inputs
-IS = 1500; % kg m²
-IR = 500; % kg m²
+IS = 1500; % kgm²
+IR = 500; % kgm²
 
-w_0 = 1; % rad / s
-wr_0 = -10; % rad / s
-wr_1 = -9; % rad / s
+w_0 = 1;
+wr_0 = -10;
+wr_1 = -9;
+
 
 %% Calculations
 
@@ -100,10 +104,10 @@ H = IS*w_0 + IR*(wr_0+w_0);
 w_1 = (H-IR*wr_1)/(IS+IR);
 
 % Old kinetic energy
-T_0 = 0.5*IS*w_0^2+0.5*IR*wr_0^2;
+T_0 = 0.5*IS*w_0^2+0.5*IR*(wr_0+w_0)^2;
 
 % (b) New kinetic energy
-T_1 = 0.5*IS*w_1^2+0.5*IR*wr_1^2;
+T_1 = 0.5*IS*w_1^2+0.5*IR*(wr_1+w_1)^2;
 loss = T_0-T_1; % J
 ```
 
@@ -117,7 +121,7 @@ w_1 =
 
 ```matlab
 loss =
-    5.0781 kJ
+    3.5625 kJ
 ```
 #### c
 
@@ -129,7 +133,8 @@ The code used to solve the problem is the following
 
 ```matlab
 %% Inputs
-IS = [60 60 80]; % kg m²
+I_S = 80 % kg m^2
+I_T = 60 % kg m^2
 wz_0 = 2; % rad s^-1
 
 a = deg2rad(15); % rad
@@ -137,19 +142,19 @@ a = deg2rad(15); % rad
 %% Calculations
 
 % Angular moment (remains constant cause no external torque)
-Hz = IS(3) * wz_0;
+Hz = I_S * wz_0;
 H = Hz / cos(a);
 Ht = H * sin(a);
-wt_0 = Ht / IS(1); % both x,y rotation
+wt_0 = Ht / I_T; % x,y rotation
 
 % (a) Final spin rate
-wz_1 = H / IS(3); % rad/s
+wz_1 = H / I_S; % rad/s
 
 % Old kinetic energy
-T_0 = 0.5*(IS(1)*wt_0^2 + IS(2)*wt_0^2 + IS(3)*wz_0^2);
+T_0 = 0.5*(I_T*wt_0^2 + I_S*wz_0^2);
 
 % (b) New kinetic energy and loss
-T_1 = 0.5*IS(3)*wz_1^2; % J
+T_1 = 0.5*I_S*wz_1^2; % J
 loss = T_0-T_1; % J
 ```
 
@@ -163,7 +168,7 @@ wz_1 =
 
 ```matlab
 loss =
-   19.1458 J
+   3.8292 J
 ```
 
 # E 5
@@ -180,7 +185,7 @@ Being a stationary orbit, T = 24h, therefore $\dot{\theta}$ becomes a very small
 
 $$\mathbf{L} = \frac{\Delta \mathbf{H}}{\Delta t} = \frac{ H\cos \theta \hat{\mathbf{z}} + H \sin \theta \hat{\mathbf{x}} - H\hat{\mathbf{z}}}{\Delta t} \approx \frac{ H\hat{\mathbf{z}} + H \dot{\theta}\Delta t \hat{\mathbf{x}} - H\hat{\mathbf{z}}}{\Delta t}= H\dot{\theta} \hat{\mathbf{x}}$$
 
-$$L  = H \dot{\theta} = I_s\omega_s \cdot \frac{2 \pi}{24 \cdot 60 \cdot 60} = 13.708\quad \text{N m}$$
+$$L  = H \dot{\theta} = I_s\omega_s \cdot \frac{2 \pi}{24 \cdot 60 \cdot 60} = 2.262\ \text{mN m}$$
 
 Expressed from the orbital frame.
 
@@ -460,4 +465,10 @@ We can know this maximum exists as the $f’$ is positive and $f= 0$ at $\theta 
 
 The kinetic energy at the largest value of $\beta$ is given by:
 
-$$ \cos \beta = \frac{2T}{Hw}$$
+$$ \boldsymbol{H}\cdot \boldsymbol{\omega} = H_a \omega_a + H_t \omega_t;\quad |\boldsymbol{H}| = \sqrt{H_a^2 + H_t^2}| = I_t \omega \sqrt{k^2\cos^2\beta + sin^2\beta};\quad \frac{H^2}{I_t} = I_t \omega ^2 (k^2 \cos^2\beta + sin^2\beta)$$
+
+$$ T = \frac{1}{2} I_t \omega^2 (k \cos^2\beta + sin^2\beta)$$
+
+$$
+T=  \frac{H^2}{2I_t} \cdot \frac{k \cos^2\beta + sin^2\beta}{k^2 \cos^2\beta + sin^2\beta}
+$$
