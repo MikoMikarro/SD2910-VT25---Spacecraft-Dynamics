@@ -123,6 +123,7 @@ Similar to A 5
 - angular momentum will stay constant **if** there is no external torque (conservation of angular momentum)
    - internal dissipation -> friction, sloshing
    - external dissipation -> magnetic damping, drag, thrusters (active dissipation)
+
 # E 11
 
 > Euler’s equation of motion around the z axis in two dimensions is Iz ω̇z = Lz , whereas it in three dimensions is Iz ω̇z = −(Iy − Ix )ωx ωy + Lz , assuming that the xyz coordinate systems is aligned with the principal axis. Why does Euler’s equations of motion for axis z contain the rotational velocities for axes x and y and for which cases are the Euler’s equations of motion completely decoupled?
@@ -187,13 +188,31 @@ This behavior arises from how \(\boldsymbol{\omega}\) and \(\mathbf{H}\) align b
 
 # E 13
 
+> why did we lose energy?
+
+- dissipation of energy due to
+   - friction in joints
+   - ...
+
+
+
 # E 14
 
+
+1. zero spin rate excluded since intermediate axis is not inherently stable -> no spin of reaction wheel would lead to unstable behavior
+2. minor inertia axis is (linearly) stable, therefore the zero spin case is admissable
+3. for certain (negative) speeds beyond the critical speed, the system becomes unstable 
 # E 15
 
 # E 16
 
+
 # A 1
+
+- preface: prolate body -> rate of precession < axial rotation ! THIS IS NOT REALLY TRUE I THINK !
+	1. angle $\theta_\omega = \tan^{-1}(\frac{\omega_T}{\omega_a}) = \tan^{-1}(2)\approx 63.4°$ 
+	2. angle $\theta_{H} = \tan ^{-1}\left( \frac{I_{T}\omega_{T}}{I_{a}\omega_{a}} \right) = \tan ^{-1}(4) \approx 76°$
+	3. $\Omega = \frac{H}{I_{t}}=\frac{\sqrt{ (I_{t}\omega_{t})^{2}+(I_{a}\omega_{a})^{2} }}{I_{t}}=\dots=\frac{\sqrt{ 17 }}{2}\omega_{a}$ => $\frac{\Omega}{\omega}=\frac{\Omega}{\sqrt{ 5\omega_{a}^{2} }}=\frac{\sqrt{ 17 }}{\sqrt{ 20 }}<1$ (correct, see prefaces)
 
 # C 2
 
