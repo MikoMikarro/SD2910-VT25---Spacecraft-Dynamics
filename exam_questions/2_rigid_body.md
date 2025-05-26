@@ -23,18 +23,10 @@ The ratio of moments of inertia scales the angles, making the nutation angle lar
 
 > Explain in words the mechanical meaning of the principal moments of inertia and the corresponding principal axes. Is there any relation between the principal rotation axis (eigenaxis) and the principal inertia axes? In solid mechanics, one important stress type is the principal normal stresses, i.e. maximum, intermediate and minor normal stresses. Are there any similarities between the principal moments of inertia and the principal normal stresses?
 
-
-**Principal Moments of Inertia & Axes:**  
-The **principal moments of inertia** are the eigenvalues of the inertia tensor, representing a rigid body's resistance to rotational acceleration about three mutually perpendicular **principal axes**. These axes are directions where rotational motion is "pure" (no coupled torques or products of inertia). The largest/smallest principal moment corresponds to the axis hardest/easiest to rotate about.  
-
-**Relation to Rotation Axis (Eigenaxis):**  
-The **principal axes of inertia** *are* the **principal rotation axes** (eigenaxes). When a body rotates about a principal axis, angular velocity **ω** and angular momentum **L** align, producing stable, torque-free rotation.  
-
-**Similarity to Principal Normal Stresses:**  
-Both concepts rely on diagonalizing a tensor (inertia/stress) to find principal values (moments of inertia/normal stresses) and directions (axes/planes) where off-diagonal terms vanish (no shear stress/no coupled inertia).  
-- **Principal stresses** are extreme normal stresses on planes with zero shear.  
-- **Principal moments of inertia** are extreme rotational inertias about axes with no inertial coupling.  
-
+- principal moments of inertia are the eigenvalues of the inertia tensor
+- if the coordinate frame is aligned with the principal axes, there are no products of inertia
+- principal rotation axis aligned with principal inertia axis -> stable rotation (no wobble due to products of inertia)
+- normal stresses -> eigenvalues of stress tensor, corresponding principal directions are directions with no sheer stress
 
 # E 4
 
@@ -50,6 +42,12 @@ Kinetic energy is conserved *if no work is done by external torques*. For a rigi
 1. **Angular momentum conservation**: \( \boldsymbol{\tau} = 0 \).  
 2. **Kinetic energy conservation**: \( \boldsymbol{\tau} \cdot \boldsymbol{\omega} = 0 \).  
 
+#### Also
+
+- Conservation of angular momentum: no external torque
+   - in body frame: magnitude conserved, direction not necessarily
+   - in inertial frame: both magnitude and direction conserved
+- Conservation of kinetic energy: no internal/external torque (i.e. no transfer of energy from potential to kinetic), no dissipative energy (sloshing of tanks, etc.)
 
 # E 5
 
@@ -81,9 +79,18 @@ The **parallel axis theorem** relates the inertia tensor of a rigid body about a
 > Explain by simple sketches why the linearized gravity gradient torque expression does not depend on the
 yaw angle. You must first define the orientation of the yaw axis with respect to the orbital frame.
 
+- yaw angle is the rotation around the earth-center-pointing vector, i.e. the z-axis in the orbital frame (VVLH, Vehicle Velocity, Local Horizontal)
+   -> the yaw angle therefore does not influence the "slope" of the spacecraft to the local horizontal axis
+- Since the gravity gradient depends on the _distance_ of a respective mass in the spacecraft to the Earth's center of mass, and the local changes in the gravity field can be ignored for such a small object, there is no resulting change in the gravity gradient/its resulting torque.
+- a change in the gravity gradient torque is therefore only induced by a rotation around the pitch or roll axis, as these move parts of the spacecraft along the VVLH z-axis
+
 # E 8
 
 > The gravity gradient torque on a spacecraft expressed in the body-fixed frame is: Using the equation above, describe three cases for which one or several of the gravity gradient torque components are zero. Explain what each of these cases means for the possible to use gravity gradient torques as a realistic means for gravity gradient stabilization of a spacecraft.
+
+- Case 1: symmetric ($I_{3}=I_{2}=I_{1}$) -> zero-torque $L_{G}$ vector, no possibility of using gravity torque for stabilization
+- Case 2: axisymmetric around the $i$th body axis -> will not experience any gravity gradient torque about its symmetry axis ($i$th axis), only stabilizable about the other two axes (e.g. alignment of the symmetry axis but not the yaw angle) 
+- Case 3: center of mass vector $R_{c}$ parallel with any of the principal body axes -> two of the three $R_{c_{i}}$ vector components $=0$ -> $L_G=0$ -> torque zero, this equates to a stable position with $R_c$ lined up with one of the principal body axes
 
 # E 9
 
@@ -102,6 +109,20 @@ Basically two of the axis are going to end up havving the same inertia
 
 Similar to A 5
 
+#### Also 
+
+- Stability around
+   - Minor axis -> maximum energy case, stable
+   - Major axis -> minor energy case, stable
+   - Intermediate axis -> tennis racket theorem, unstable
+- Case: pure spin around minor axis = maximum energy case
+   - Energy dissipation -> loss of energy, moving away from equilibrium point
+   - start to "wobble", i.e. rotation of axis of angular velocity vector around axis of inertia
+   - as more and more energy is dissipated, intermediate axis (separatix) is crossed and rotation around major axis starts
+   - system will eventually settle in minimum energy case around major axis
+- angular momentum will stay constant **if** there is no external torque (conservation of angular momentum)
+   - internal dissipation -> friction, sloshing
+   - external dissipation -> magnetic damping, drag, thrusters (active dissipation)
 # E 11
 
 > Euler’s equation of motion around the z axis in two dimensions is Iz ω̇z = Lz , whereas it in three dimensions is Iz ω̇z = −(Iy − Ix )ωx ωy + Lz , assuming that the xyz coordinate systems is aligned with the principal axis. Why does Euler’s equations of motion for axis z contain the rotational velocities for axes x and y and for which cases are the Euler’s equations of motion completely decoupled?
@@ -231,6 +252,13 @@ Therefore:
 * **(ii) The angle between the angular momentum vector and the axis of symmetry is approximately $14.04^\circ$.**
 * **(iii) The ratio between the precession angular velocity and the total angular velocity is $\frac{2}{\sqrt{5}} \approx 0.894$.**
 
+#### Also
+
+See 1.17, oblate, moment of inertia ratio 2, velicity ratio 2
+	- angle $\theta_{\omega}=\tan ^{-1}\left( \frac{\omega_{T}}{\omega_{a}} \right) = \tan ^{-1}\left( \frac{1}{2} \right) \approx 27°$
+	- angle $\theta_{H} = \tan ^{-1}\left( \frac{I_{t}\omega_{t}}{I_{a}\omega_{a}}  \right) = \tan ^{-1}\left( \frac{1}{4} \right)=14°$
+	- same relations as 1.17 lead to $\frac{\Omega}{\omega}=\frac{\sqrt{ 17 }}{\sqrt{ 5 }}$
+
 # A 3
 
 > An oblate axisymmetric body subjected to torque-free motion in space has a moment of inertia ratio equal to 2 and an axial-to-transversal angular velocity ratio equal to 1/2. Estimate the following: (i) the angle between the axis of symmetry and the angular velocity, (ii) the angle between the angular momentum vector and the axis of symmetry, and (iii) the ratio between the precession angular velocity and the total angular velocity.
@@ -282,6 +310,13 @@ Therefore, with the new angular velocity ratio:
 * **(ii) The angle between the angular momentum vector and the axis of symmetry is $45^\circ$.**
 * **(iii) The ratio between the precession angular velocity and the total angular velocity is $\frac{1}{\sqrt{5}} \approx 0.447$.**
 
+#### Also: 
+
+See 1.17, oblate, moment of inertia ratio 2, velocity ratio 1/2
+	- angle $\theta_{\omega}=\tan ^{-1}\left( \frac{\omega_{T}}{\omega_{a}} \right) = \tan ^{-1}(2) \approx 63.4°$
+	- angle $\theta_{H} = \tan ^{-1}\left( \frac{I_{t}\omega_{t}}{I_{a}\omega_{a}}  \right) = \tan ^{-1}(1)=45°$
+	- same relations as 1.17 lead to $\frac{\Omega}{\omega}=\frac{\sqrt{ 2 }}{\sqrt{ 5 }}<1$
+
 # A 4
 
 > A prolate axisymmetric spacecraft is spinning around its symmetry axis in a torque-free space. A variable control momentum gyro is freely suspended in the spacecraft. The spin axis of the rotor of the gyro is initially coinciding with the axis of symmetry. The gimbal frame of the rotor is the turned with an angular velocity for a very short time. Illustrate the torque that is acting on the spacecraft and the resulting positions of (i) the axis of symmetry, (ii) the angular velocity, and (iii) angular momentum.
@@ -309,6 +344,9 @@ When a control momentum gyro (CMG) in a prolate axisymmetric spacecraft is gimba
    - **Spacecraft Angular Momentum**: Gains a y-component to counterbalance the CMG's tilted momentum:  
      **H_spacecraft = I_zω_zẑ - Hδŷ**.  
    - **CMG Angular Momentum**: Tilts to **H_rotor = Hẑ + Hδŷ**, ensuring total **H_total** remains conserved.
+
+#### Also:
+- right hand law for acting torque on _S/C_ (first axis spin axis, second axis gimbal axis, third axis gyro moment direction)
 
 # A 5
 
