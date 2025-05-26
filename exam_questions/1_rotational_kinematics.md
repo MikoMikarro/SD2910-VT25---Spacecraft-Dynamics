@@ -398,16 +398,6 @@ Markley's improvement lies in a more generalized approach that implicitly or exp
 
 The improvement gained is **higher accuracy and robustness** when dealing with numerically imperfect DCMs, which is a common scenario in navigation and attitude determination systems.
 
-### Do you always need to work with Shepperd or Markley algorithms when using Euler parameters?
-
-**Yes, generally you should use algorithms like Shepperd's or Markley's when converting a DCM to Euler parameters (quaternions).**
-
-**Why?**
-
-* **Numerical Stability:** As discussed, direct algebraic solutions for converting DCM to quaternions can lead to numerical instabilities (e.g., division by very small numbers or square roots of negative numbers due to floating-point errors) when certain components of the quaternion are near zero or when the rotation is close to $0^\circ$ or $180^\circ$. Algorithms like Shepperd's and Markley's are specifically designed to circumvent these issues by selecting the most numerically stable calculation path.
-* **Robustness to Imperfect DCMs:** Especially with Markley's algorithm, they provide robust solutions even if the input DCM is not perfectly orthogonal, which often happens in real-time systems due to sensor noise or integration errors.
-* **Standard Practice:** These algorithms (or similar numerically robust approaches like those based on singular value decomposition) are standard practice in aerospace engineering, robotics, and computer graphics for their reliability and accuracy in attitude representation.
-
 While other direct algebraic formulas exist, they are generally less robust and more prone to numerical issues, making Shepperd's or Markley's methods the preferred choice for practical applications.
 
 # C 3
@@ -545,16 +535,55 @@ MRPs avoid singularities for \( \theta = 360^\circ \) but work cleanly for \( \t
 
 # C 5
 
-> 
+>  A frame B is rotating with respect to an inertial frame N . At time t0 , frame B coincides with frame N . What is the attitude of frame B in Euler parameters at time t0 . At a certain time t1 , frame B has rotated 180 degrees around axis b2 = n2 . What is the attitude of frame B in Euler Parameters (EP) at  time t1 ? What is the attitude in EP — with respect to the initial frame N — if the spacecraft performs another 180 degree rotation around its axis b3 from its position at time t1 ?
 
+
+At time \( t_0 \), frame B coincides with frame N, so the attitude in Euler parameters (EP) is the identity quaternion:  
+**EP at \( t_0 \):** \( [1, 0, 0, 0] \).
+
+At \( t_1 \), after a 180° rotation about \( \mathbf{b}_2 = \mathbf{n}_2 \), the EP is:  
+**EP at \( t_1 \):** \( [0, 0, 1, 0] \).
+
+After another 180° rotation about the body-fixed axis \( \mathbf{b}_3 \) (from \( t_1 \)), the total attitude relative to N is computed by quaternion multiplication \( q_{\text{total}} = q_1 \cdot q_2 \), where \( q_1 = [0, 0, 1, 0] \) and \( q_2 = [0, 0, 0, 1] \). The result is:  
+**Final EP:** \( [0, 1, 0, 0] \).  
+
+This corresponds to a 180° rotation about the inertial \( \mathbf{n}_1 \)-axis.  
+
+**Answers:**  
+- \( t_0 \): \( \boxed{[1, 0, 0, 0]} \)  
+- \( t_1 \): \( \boxed{[0, 0, 1, 0]} \)  
+- After second rotation: \( \boxed{[0, 1, 0, 0]} \)
+
+The initial quaternions can be solved using the relationship between angle and parameter. The second one can also be infered doing the rotatios by hand and seeing the equivalent rotation.
 # A 1
 
-> 
+> For a constant angular velocity ω = (1 2 3) deg/s and an initial attitude in Euler parameters equal to (1 0 0 0), the time-variation of the Euler parameters have a closed-form exact solution. What is the eigenaxis of the rotation for this specific case?
+
+The eigenaxis of a rotation is simply the direction of the angular velocity vector, since this represents the axis about which the rotation occurs.
+
+To find the eigenaxis, I need to normalize the angular velocity vector:
+
+ω = (1, 2, 3) deg/s
+
+The magnitude is:
+|ω| = √(1² + 2² + 3²) = √(1 + 4 + 9) = √14
+
+Therefore, the eigenaxis (unit vector along the rotation axis) is:
+
+**ê = (1/√14, 2/√14, 3/√14)**
+
+Or in decimal form: **ê ≈ (0.267, 0.535, 0.802)**
+
+This eigenaxis remains constant throughout the rotation since we have constant angular velocity. The initial attitude being the identity rotation doesn't change the fact that the rotation occurs about this fixed axis in space.
 
 # A 2
 
-> 
+> Show the resulting composite rotation of EP attitudes β 1 from principal rotation angle Φ1 and β 2 from principal rotation angle Φ2 with Φ1 > 0, Φ2 < 0 and |Φ1 | > |Φ2 | using the Euler parameter unit constraint sphere.
+
+Not really sure what they mean here with "using the Euler parameter unit constraint sphere". But I would just make two circles.
 
 # A 3
 
-> 
+> Show the resulting composite rotation of MRP attitudes σ 1 from principal rotation angle Φ1 and σ 2 from principal rotation angle Φ2 with π/2 > Φ1 > 0, Φ2 < 0 and |Φ1 | > |Φ2 | using the Euler parameter unit constraint sphere and projections on the MRP hyperplane.
+
+Not really sure what they mean here with "using the Euler parameter unit constraint sphere". But I would just make two circles.

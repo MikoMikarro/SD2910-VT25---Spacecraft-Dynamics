@@ -53,6 +53,8 @@ Kinetic energy is conserved *if no work is done by external torques*. For a rigi
 
 # E 5
 
+> For torque-free rigid body rotations with no external forces, the magnitude of angular momentum and kinetic energy are conserved. The angular momentum can be written in the body-fixed frame as a sphere. While the kinetic energy can be written as an ellipse. Explain why the angular momentum sphere and the energy ellipsoid must intersect for torque-free motions. What does the intersection curve contain? Draw the angular momentum sphere for the cases where I1 > I2 > I3 and I2 > I1 > I3 .
+
 # E 6
 
 > Describe the parallel axis-theorem and show how it is applied to a general rigid body to compute both the moments of inertia and the products of inertia. When is the parallel axis theorem used in practice? From a rigid body dynamics point of view: what influence have the positive moments of inertias and the positive or negative products of inertias?
@@ -76,17 +78,91 @@ The **parallel axis theorem** relates the inertia tensor of a rigid body about a
 
 # E 7
 
+> Explain by simple sketches why the linearized gravity gradient torque expression does not depend on the
+yaw angle. You must first define the orientation of the yaw axis with respect to the orbital frame.
+
 # E 8
+
+> The gravity gradient torque on a spacecraft expressed in the body-fixed frame is: Using the equation above, describe three cases for which one or several of the gravity gradient torque components are zero. Explain what each of these cases means for the possible to use gravity gradient torques as a realistic means for gravity gradient stabilization of a spacecraft.
 
 # E 9
 
+> A satellite in a circular orbit has its body-fixed axis 3 oriented in the radial direction of the orbit. Axis 1 of the orbital frame is oriented along the orbit, i.e. aligned with the velocity vector, and axis 2 is normal to the orbital plane. The body-fixed axes 1 and 2 are aligned with axes 1 and 2 of the orbital frame.
+The conditions for gravity gradient stability in a linear sense are:
+I2 > I1 > I3
+I1 < I2 + I3
+I2 < I1 + I3
+I3 < I1 + I2
+
+Basically two of the axis are going to end up havving the same inertia
+
 # E 10
+
+> Describe the stability of a rigid body spinning around the minor, intermediate and major principal inertia axes. Consider a case of spinning purely around the minor principal inertia axis. What will happen with the angular momentum sphere and kinetic energy ellipsoid if we have energy dissipation in the system? Explain using the angular momentum sphere and the kinetic energy ellipsoid. Will the angular momentum stay constant in the presence of energy dissipation—why or why not? In which ways can energy be dissipated from a spinning body?
+
+Similar to A 5
 
 # E 11
 
+> Euler’s equation of motion around the z axis in two dimensions is Iz ω̇z = Lz , whereas it in three dimensions is Iz ω̇z = −(Iy − Ix )ωx ωy + Lz , assuming that the xyz coordinate systems is aligned with the principal axis. Why does Euler’s equations of motion for axis z contain the rotational velocities for axes x and y and for which cases are the Euler’s equations of motion completely decoupled?
+
+Euler’s equations couple rotational velocities across axes due to **unequal moments of inertia** (e.g., \(I_x \neq I_y\)), which introduce **gyroscopic cross-terms** like \(-(I_y - I_x)\omega_x\omega_y\) in the \(z\)-axis equation. These terms arise from the **Coriolis effect** in the rotating body-fixed frame. 
+
+The equations are **completely decoupled** only when **all principal moments of inertia are equal** (\(I_x = I_y = I_z\)), as in a **spherical top** (e.g., a uniform sphere). For symmetric tops (\(I_x = I_y \neq I_z\)), only the symmetry-axis equation decouples (e.g., \(z\)-axis if \(I_x = I_y\)), while the others retain cross-terms.
+
 # C 1
 
+> The space cone is fixed in space and has its cone axis aligned with the angular momentum vector. The space cone angle is defined as the angle between the angular momentum vector and the rotational velocity vector. The body cone axis is aligned with the axis of axisymmetry (which we want the spacecraft to spin about). The body cone angle is the angle between the axis of axisymmetry and the rotational vector. Illustrate why the body cone will roll on the space cone for prolate bodies, while the space cone will lie inside the body cone for oblate bodies. Illustrate/animate with two objects — one soft drink can and one disk — how the objects rotate in their coning motions (spin axis precession).
+
+The motion of a spinning axisymmetric body (like a soft drink can or a disk) can be visualized using **space cones** and **body cones**:
+
+### **1. Prolate Bodies (e.g., Soft Drink Can):**
+- **Shape**: Elongated along the symmetry axis (body cone axis).
+- **Moments of Inertia**: \(I_z < I_x = I_y\) (smaller along the symmetry axis).
+- **Behavior**:
+  - The **angular momentum \(\mathbf{H}\)** (fixed in space) is tilted *farther* from the symmetry axis compared to the **angular velocity \(\boldsymbol{\omega}\)**.
+  - The **body cone** (fixed to the object) rolls *without slipping* around the **space cone** (fixed in space).  
+  - **Why?** For prolate bodies, \(\boldsymbol{\omega}\) precesses *around \(\mathbf{H}\)* in a wider path, causing the body cone to externally trace the space cone.
+
+### **2. Oblate Bodies (e.g., Disk):**
+- **Shape**: Flattened perpendicular to the symmetry axis.
+- **Moments of Inertia**: \(I_z > I_x = I_y\) (larger along the symmetry axis).
+- **Behavior**:
+  - The **angular momentum \(\mathbf{H}\)** is tilted *closer* to the symmetry axis than \(\boldsymbol{\omega}\).
+  - The **space cone** lies *inside* the **body cone**.
+  - **Why?** For oblate bodies, \(\boldsymbol{\omega}\) precesses *around \(\mathbf{H}\)* in a tighter path, causing the space cone to nest within the body cone.
+
+---
+
+
+This behavior arises from how \(\boldsymbol{\omega}\) and \(\mathbf{H}\) align based on \(I_z\), governed by Euler’s equations.
 # E 12
+
+> Describe the stability of the spinning around the minor, intermediate and major principal axes — is the equilibrium points defined as unstable, neutrally stable or a stable node (may be different definitions for each axis)? What are the conditions for stable equilibrium points in a mathematical sense? Draw some sketches of different equilibrium points for a 2 × 2 system. How do we determine the stability of equilibrium points for a 3 × 3 system? Describe the two stability analysis procedures: (i) linearization of equation system by Jacobian matrix and (ii) small perturbation analysis.
+
+**Stability of Spinning Around Principal Axes:**
+- **Minor Axis (Smallest Moment of Inertia):** Neutrally stable (center in phase space).
+- **Intermediate Axis:** Unstable (saddle point).
+- **Major Axis (Largest Moment of Inertia):** Neutrally stable (center).
+
+**Conditions for Stable Equilibrium:**
+- In a mathematical sense, an equilibrium is **asymptotically stable** if all eigenvalues of the Jacobian matrix have negative real parts. However, for conservative systems (no dissipation), asymptotic stability is impossible. Instead, **neutral stability** (purely imaginary eigenvalues) occurs for the minor and major axes, indicating bounded oscillations around the equilibrium.
+
+**Stability Analysis for 3×3 Systems:**
+- Compute eigenvalues of the Jacobian matrix at the equilibrium:
+  - **Asymptotically stable:** All eigenvalues have negative real parts.
+  - **Unstable:** At least one eigenvalue has a positive real part.
+  - **Neutrally stable:** Eigenvalues have zero real parts (e.g., centers), but stability may depend on nonlinear terms.
+
+**Stability Analysis Procedures:**
+1. **Jacobian Linearization:**
+   - Linearize the system near the equilibrium by computing the Jacobian matrix.
+   - Determine eigenvalues: Stability is classified based on their signs (as above).
+
+2. **Small Perturbation Analysis:**
+   - Introduce small perturbations to the equilibrium state.
+   - Linearize the governing equations by neglecting higher-order terms.
+   - Solve the resulting linear system to determine exponential growth/decay of perturbations (equivalent to Jacobian method).
 
 # E 13
 
@@ -96,11 +172,17 @@ The **parallel axis theorem** relates the inertia tensor of a rigid body about a
 
 # E 16
 
+# A 1
+
 # C 2
+
+> A prolate axisymmetric spacecraft is suddenly subjected to an angular impulse perpendicular to its angular momentum vector so that it is performing a coning motion. Assume that the inertia ratio is 3 and that the spacecraft is spinning only around the axis of symmetry prior to the angular impulse. Sketch the new position of (i) the axis of symmetry, (ii) the angular velocity, and (iii) angular momentum.
 
 # C 3
 
-# A 1
+> An oblate axisymmetric spacecraft is subjected to an angular impulse perpendicular to its angular momentum vector so that it is performing a coning motion. Assume that the inertia ratio is 2 and that the spacecraft is spinning only around the axis of symmetry prior to the angular impulse. Illustrate the new position of (i) the axis of symmetry, (ii) the angular velocity, and (iii) angular momentum.
+
+# A 2
 
 > An oblate axisymmetric body subjected to torque-free motion in space has a moment of inertia ratio equal to 2 and an axial-to-transversal angular velocity ratio equal to 2. Estimate the following: (i) the angle between the axis of symmetry and the angular velocity, (ii) the angle between the angular momentum vector and the axis of symmetry, and (iii) the ratio between the precession angular velocity and the total angular velocity.
 
@@ -149,7 +231,7 @@ Therefore:
 * **(ii) The angle between the angular momentum vector and the axis of symmetry is approximately $14.04^\circ$.**
 * **(iii) The ratio between the precession angular velocity and the total angular velocity is $\frac{2}{\sqrt{5}} \approx 0.894$.**
 
-# A 2
+# A 3
 
 > An oblate axisymmetric body subjected to torque-free motion in space has a moment of inertia ratio equal to 2 and an axial-to-transversal angular velocity ratio equal to 1/2. Estimate the following: (i) the angle between the axis of symmetry and the angular velocity, (ii) the angle between the angular momentum vector and the axis of symmetry, and (iii) the ratio between the precession angular velocity and the total angular velocity.
 
@@ -200,7 +282,7 @@ Therefore, with the new angular velocity ratio:
 * **(ii) The angle between the angular momentum vector and the axis of symmetry is $45^\circ$.**
 * **(iii) The ratio between the precession angular velocity and the total angular velocity is $\frac{1}{\sqrt{5}} \approx 0.447$.**
 
-# A 3
+# A 4
 
 > A prolate axisymmetric spacecraft is spinning around its symmetry axis in a torque-free space. A variable control momentum gyro is freely suspended in the spacecraft. The spin axis of the rotor of the gyro is initially coinciding with the axis of symmetry. The gimbal frame of the rotor is the turned with an angular velocity for a very short time. Illustrate the torque that is acting on the spacecraft and the resulting positions of (i) the axis of symmetry, (ii) the angular velocity, and (iii) angular momentum.
 
@@ -225,10 +307,10 @@ When a control momentum gyro (CMG) in a prolate axisymmetric spacecraft is gimba
 3. **Angular Momentum**:
    - **Total Angular Momentum**: Remains fixed along the original z-axis in inertial space.  
    - **Spacecraft Angular Momentum**: Gains a y-component to counterbalance the CMG's tilted momentum:  
-     **L_spacecraft = I_zω_zẑ - Hδŷ**.  
-   - **CMG Angular Momentum**: Tilts to **H_rotor = Hẑ + Hδŷ**, ensuring total **L_total** remains conserved.
+     **H_spacecraft = I_zω_zẑ - Hδŷ**.  
+   - **CMG Angular Momentum**: Tilts to **H_rotor = Hẑ + Hδŷ**, ensuring total **H_total** remains conserved.
 
-# A 4
+# A 5
 
 > A spacecraft with $I_3 < I_2 < I_1$ is spinning almost purely around its minor inertia axis with $H_3 > 0$. The spacecraft is dissipating energy. Describe the trajectory of H along the angular momentum sphere from almost pure spinning around axis 3 until pure spinning around axis 1. Clearly show the direction of the trajectory of $H$ and explain from Euler’s equations of motion the trajectory direction, specifically when passing through the sepratrix.
 

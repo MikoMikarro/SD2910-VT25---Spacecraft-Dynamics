@@ -71,7 +71,6 @@ Even ones usually are functions of velocity that cancel out the position term. T
 
 What usually is aimed to control is both the velocity and position of the body, therefore what is explored is the global asymptotic stability of those two terms.
 
-
 # C 2
 
 > When developing control laws for the torques for a spinning spacecraft, one usually specifies that the first time derivative of the Lyapunov function is V̇ = −δωPδω to guarantee that the Lyanpunov function is negative semidefinite for a positive definite velocity feedback gain matrix P. Why do we not also specify a quadratic term in the position errors to guarantee that the Lyapunov function also is negative definite non-zero position error? How can we guarantee that the Lyapunov function is negative definite and not just negative semidefinite?
