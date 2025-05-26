@@ -4,6 +4,12 @@
 
 The DCM is a 3x3 matrix where each element represents the cosine of the angle between an axis of the original coordinate frame (e.g., body frame) and an axis of the target frame (e.g., inertial frame). Unlike Euler angles, the DCM does not suffer from singularities (e.g., gimbal lock) because it directly encodes the orientation without sequential rotations. Graphically, the DCM’s columns are three orthogonal unit vectors that can rotate freely without alignment issues, avoiding the "overlapping axes" problem inherent to Euler angles.
 
+#### Also
+-> angles between axis $i$ of $n$ frame and axis $j$ of $b$ frame = $\alpha_{ji}$
+- can also be defined from e.g. Euler angles: (matrix mult)
+- 9 parameters involved, 4 needed to have no singularities -> 5 overparameterizations
+- graphically: all axes are defined as vectors and do not rely on the definition on the other 2 axes
+
 # E 2
 
 > *List five fundamental properties/requirements for the direction cosine matrix (DCM) to be a real proper orthogonal matrix. What is the meaning of these properties, or in other words: if the properties are not fulfilled, what would happen if an improper DCM is used to transform a vector from one system to another system. Show an example in two dimensions.*
@@ -168,7 +174,13 @@ In general, all 3D rotation representations have some form of singularity or dis
 
 > *Show by a simple example and sketches that rotations in three dimensions around the coordinate axes are non-commutative, whereas rotations in two dimensions are commutative. Not not use equations for your example. Provide an explanation why Euler angles still are popular despite the fact that they are dependent on the rotation sequence around each axis.*
 
-Ez
+- Simple example: two rotations around main axes, switch order -> different result (SO(3) group)
+- in 2D -> same result (since only 1 possible rotation, SO(1) group)
+- still popular because
+   - they provide a somewhat intuitive approach to rotations
+   - are useful e.g. in planes (yaw, pitch, roll) or orbital mechanics (inclination, RAAN, argument of periapsis)
+   - sufficient for small angles
+   - small
 
 
 # E 6
@@ -180,6 +192,16 @@ The singularity for Modified Rodrigues Parameters (MRPs) occurs when the princip
 To avoid this singularity, a **shadow set** of MRPs is used.
 
 Geometrically, the shadow set corresponds to representing the same attitude by a rotation of $\phi - 360^\circ$ (or $\phi - 2\pi$ radians) about the *same* principal axis, effectively rotating "the other way around" the circle.
+
+#### Also
+
+- MRPs are a projection of the 4D quaternions onto a 3D Hyperplane in a 2D projection, this equates to a projection from point (-1,0) onto the y-axis -> angle between projection point and MRP is half that of the EP angle ($\Phi/4$ instead of $\Phi/2$)
+- The singularity occurs for $\Phi = \pm 360°$, which equates to a the quaternion being in the projection point (graphically)
+- To avoid the singularity, we switch to the shadow set MRP
+   - Since every quaternion is non-singular, we can use the negative quaternion to represent the same rotation
+   - If we switch from normal to shadow MRP once the value of the MRP exceeds 1, we avoid singularities all together with a whole quadrant of margin
+   - the additional benefit is that the MRP norm does not exceed 1 -> good for calculations, control, etc.
+- Geometric meaning: short and long MRP (> and < 180°)
 
 # E 7
 
@@ -439,6 +461,13 @@ This property is fundamental to quaternion mathematics - they provide a double c
 
 In practice, most implementations simply choose the positive solution by convention, but either solution works equally well for representing the orientation.
 
+#### Also:
+
+- The two solutions represent the same orientation/point on the quaternion hypersphere
+- The difference is the depiction: one is the short form, one the long
+   - $\beta$ and $\beta' = -\beta$
+   - $\beta_{0} \geq 0 \implies \Phi \leq 180°$ and vice versa
+
 # C 4
 
 > *Euler eigenaxis (or principal axis) is fixed in both the initial and final orientation. The eigenaxis is found as one of the eigenvectors to the direction cosine matrix (DCM). Which of the three eigenvalues of the DCM has the principal axis as its eigenvector. Motivate why this eigenvalue must be the one with the principal axis as its eigenvector. Is this eigenvalue unique? What would be the Euler eigenaxis solution for a direction cosine matrix equal to the identity matrix?*
@@ -576,14 +605,24 @@ Or in decimal form: **ê ≈ (0.267, 0.535, 0.802)**
 
 This eigenaxis remains constant throughout the rotation since we have constant angular velocity. The initial attitude being the identity rotation doesn't change the fact that the rotation occurs about this fixed axis in space.
 
+#### Also: 
+
+- eigenaxis is the (normalized) rotation vector $\frac{1}{\sqrt{ 14 }}(1\quad2\quad 3)$
+- mathematical explanation: Differential equation matrix is identity matrix for given initial EPs
+- logically: no deviation from inertial frame in initial attitude -> eigenaxis is the result of purely the rotation
+
 # A 2
 
 > Show the resulting composite rotation of EP attitudes β 1 from principal rotation angle Φ1 and β 2 from principal rotation angle Φ2 with Φ1 > 0, Φ2 < 0 and |Φ1 | > |Φ2 | using the Euler parameter unit constraint sphere.
 
 Not really sure what they mean here with "using the Euler parameter unit constraint sphere". But I would just make two circles.
 
+- $\beta_{1}$ is positive and larger, therefore the resulting composite rotation will be positive and below $\beta_{1}$
+
 # A 3
 
 > Show the resulting composite rotation of MRP attitudes σ 1 from principal rotation angle Φ1 and σ 2 from principal rotation angle Φ2 with π/2 > Φ1 > 0, Φ2 < 0 and |Φ1 | > |Φ2 | using the Euler parameter unit constraint sphere and projections on the MRP hyperplane.
 
 Not really sure what they mean here with "using the Euler parameter unit constraint sphere". But I would just make two circles.
+
+- same as above, just considering the MRPs this time
