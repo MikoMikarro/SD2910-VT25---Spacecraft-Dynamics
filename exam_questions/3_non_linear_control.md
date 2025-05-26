@@ -23,11 +23,19 @@ Asymptotic stability is strongly preferred for spacecraft control.
 
 > Most of the stability definitions arise from a linearized stability analysis of the nonlinear dynamical systems. What are the condition that must be fulfilled to conclude that the stability behaviour of the nonlinear system is not only local, but global? Do not use the Lyapunov function in your answer, instead use the two-dimensional plots of stable node and stable spiral.
 
+- No regions that lead to unstable behavior
+- All regions must converge at the same point
+
 # E 3
 
 > A Lyapunov function is a function with certain properties such as: (i) positive definite about a reference motion, (ii) continuous partial derivatives, (iii) a negative semidefinite first time derivative. Illustrate all these conditions using the ball analogy, i.e. stable equilibrium = ball in the valley, etc. Does a Lyapunov function defined according to the above conditions guarantee global stability? If not, how shall the conditions be changed to guarantee global stability?
 
 ![alt text](image.png)
+
+- e.g. parabola -> positive definite, continuous = no jumps, negative towards 0
+- it does not guarantee global (asymptotic) stability, this needs
+   - radial unboundedness
+   - negative definiteness ($\dot{V}<0$) instead of negative semidefiniteness ($\dot{V}\leq_{0}$)
 
 # E 4
 
@@ -65,11 +73,18 @@ In this control force, the term \( -k_p (x - x_d) \) is the proportional feedbac
 
 Even ones usually are functions of velocity that cancel out the position term. Therefore, we need to study the odd ones.
 
+- even order time derivatives do not have any information about the _direction_ of change, since they are time symmetric for positive definite Lyapunov functions -> e.g. $x^{4}$ -> 2nd order derivative is $x^2$, which does not reveal whether or not values are going to 0
+
 # A 1
 
 > The Hamiltonian of a nonlinear mechanical system, i.e. the sum of the kinetic and potential energies, is often used as a Lyapunov function for controlling the position and velocity of the system. Consider a damped single degree-of-freedom system, mẍ + cẋ + kx = 0, where m is the mass, c is the velocity-proportional damping and k is the stiffness. A candidate Lyapunov function is the Hamiltoniam. What are the reasons for leaving out the dissipative energy term when writing the Lyapunov function?
 
 What usually is aimed to control is both the velocity and position of the body, therefore what is explored is the global asymptotic stability of those two terms.
+
+- not conservative -> not portrayed in the Hamiltonian
+- damping is still captured by deriving and substituting the EOM
+- no way to get a negative definite Lyapunov rate with it
+- the damping component is essentially the "controller" in this system
 
 # C 2
 
@@ -109,7 +124,10 @@ Consider a spacecraft rotating about its \(z\)-axis. Let \(σ = [0, 0, σ_3]\) t
 > In the case of unknown, unmodelled torques ∆L affecting the spacecraft, a control law that is position and velocity proportional, i.e. u = −Kσ−P ω−L, will not converge to the correct attitude as the external torque compensation −L is off by ∆L. Show that the steady-state attitude error is σss = ∆L/K by using a single degree-of-freedom system analogy. How shall the control law be modified to guarantee convergence to the correct attitude? Explain qualitatively what the added control term will do to the control law and why this term indeed guarantee attitude convergence in the presence of unmodelled
 torques
 
-Integral component leads with the control law to converge to the correct attitude. 
+- at steady state, $\omega$ is zero, therefore gain $P$ plays no role. The system is therefore balanced by the position proportional component and the unmodelled torque -> $\cancel{ L } + \Delta L = K\sigma_{ss} + \cancel{ L }$ ->   $\sigma_{ss} = \Delta L/K$
+- analogy: spring damper system with unmodelled force leads to a steady state where the resulting force of the steady state deflection times the spring constant is equal to the unmodelled force
+- Modification by adding an integrator: $u = -K\sigma - P\omega-I\int_{0}^{T}\sigma\text{d}t - L$ 
+- $I$ is usually picked to be smaller than $K$ s.t. during the convergence towards the steady state, it barely influences the behavior. Once in a steady state, the integrator term will grow while the position term would stay constant. This results in a force moving the system towards the equilibrium, which leads the position term to shrink. Once the equilibrium state is reached, the position term is zero and the integrator stays constant, balancing against the unmodelled torque (without a deflection from 0)
 
 # A 2
 
@@ -117,9 +135,19 @@ Integral component leads with the control law to converge to the correct attitud
 
 Critically damped systems imply the slowest time to converge into a steady state. It doesn't say anything about how many times it goes trough the equilibrium point. This law also is simple and doesn't have feedforward that allow to avoid the crossing.
 
+
+
+- due to the Lyapunov function using MRPs and the logarithm function to derive this control law, the closed-loop tracking dynamic are rigorously linear in both body angular velocity and attitude error vectors even for large general motions
+- Only non-linearities: MRP kinematic differential equation, linearization around $\sigma=0$ leads to $\dot{\sigma}\approx\frac{1}{4}\omega$
+   -> applicable for a relatively large range of motions (better than CRPs with factor one half or Euler angles linearized as angle-type quantities)
+- From this linearization onward, standard linear control design methods are used
+- additionally: low control authority, selection of under-damped systems, periodicity of the 
+
 # A 3
 
 > The unsaturated control laws have no upper bounds on the control torques, but in reality the control
 devices (thrusters and control momentum gyros) always have limits on the maximum torques they can provide. This means that when the unsaturated control law specifies a control torque larger than the torque limits, the control device is set to operate at its limit as long as the control torque commanded by the unsaturated control law is larger than the limit. The saturation of the control device has the effect of delaying the detumbling of the spacecraft as not enough torque can be provided. When studying the stability properties of the Lyapunov optimal control laws, i.e. the time derivative of the Lyapunov function is made as negative as possible, the stability condition K|σi | ≤ umaxi (or K ≤ umaxi ), which connects the attitude feedback gain with the maximum control torques, appears. Limiting K is said to be overly conservative as simulations in the book and the lecture slides show that the solution will convergence despite violating this condition. Provide a physical explanation why a saturated control law eventually will bring a tumbling spacecraft to rest for cases where K > umaxi .
 
-It still works as detumbling, slowly and then when out of saturation behaves naturally.
+- Consider that for half of the rotation, the a pure position based controller were to be saturated. This would mean that for the part up until the MRP switch, the torque would brake the movement, after the switch it would accelerate (to go towards the regulated position)
+- However, we have the velocity based control which is constantly braking -> we have a shorter period of saturated torque accelerating than braking
+   -> In total, we have a dissipative energy which is slowly decreasing the angular velocity until the position controller can start to overtake and regulate towards 0
