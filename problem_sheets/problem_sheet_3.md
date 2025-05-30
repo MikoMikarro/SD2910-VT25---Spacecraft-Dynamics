@@ -46,6 +46,10 @@ t =
     2.2782 h
 ```
 
+![p3c2_plots](p3c2_plots.png)
+
+On the plots, we can see that the systems gets closer to stability after 1.5 orbits, which means that it takes around 2.5-3h. First, we need to understand that the controller is not able to generate a maximum torque durig the entire detumble process as the magnetic field is not always going to be perfectly oriented for the magnetorque to work at its maximum efficiency. However, the system alreaddy gets at a relatively low angular speed in the 2.3h that we intially estimated.
+
 ## b
 The limiting is mainly the maximum allowed torque, that allows the satellite to avoid saturation and once the magnetorque is smaller than the one required required, the satellite can reach a steady state faster.
 
@@ -80,7 +84,7 @@ $$\boldsymbol{\omega}_{er} = \boldsymbol{\omega} - \boldsymbol{\omega}_r$$
 $$\mathbf{I}_C\dot{\boldsymbol{\omega}} + \boldsymbol{\omega} \times \mathbf{I}_C\boldsymbol{\omega} = \boldsymbol{u}$$
 I'll use a PD-like control structure with feedforward terms:
 
-$$\boldsymbol{u} = \mathbf{I}_C\dot{\boldsymbol{\omega}}_r + \boldsymbol{\omega} \times \mathbf{I}_C\boldsymbol{\omega} - \boldsymbol{\omega}_r \times \mathbf{I}_C\boldsymbol{\omega}_r - P\boldsymbol{\sigma}_{er} - K\boldsymbol{\omega}_{er}$$
+$$\boldsymbol{u} = \boldsymbol{\omega} \times \mathbf{I}_C\boldsymbol{\omega} - \boldsymbol{\omega}_r \times \mathbf{I}_C\boldsymbol{\omega}_r - P\boldsymbol{\sigma}_{er} - K\boldsymbol{\omega}_{er}$$
 
 
 where:
@@ -95,9 +99,13 @@ $$P_i = \frac{2I_i}{T}$$
 
 $$K_i = \frac{4I_i}{T^2}$$
 
-As we can see from the analytical performance, when $T$ is much smaller than the natural period of the reference trajectory, the performance is very good:
+As we can see from the analytical performance, when $T$ is smaller than the natural period of the reference trajectory, the performance is very good:
 
-![p3a1_plots](https://github.com/MikoMikarro/SD2910-VT25---Spacecraft-Dynamics/blob/main/problem_sheets/p3a1_plots.png?raw=true)
+![p3a1_plots1](p3a1_plots1.png)
+
+Under higher amplitudes, the system was not as reliable and the control law would not be able to keep up with the reference trajectory.
+
+![p3a1_plots2](p3a1_plots2.png)
 
 # A 2
 
