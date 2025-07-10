@@ -185,19 +185,19 @@ Being a stationary orbit, T = 24h, therefore $\dot{\theta}$ becomes a very small
 
 $$\mathbf{L} = \frac{\Delta \mathbf{H}}{\Delta t} = \frac{ H\cos \theta \hat{\mathbf{z}} + H \sin \theta \hat{\mathbf{x}} - H\hat{\mathbf{z}}}{\Delta t} \approx \frac{ H\hat{\mathbf{z}} + H \dot{\theta}\Delta t \hat{\mathbf{x}} - H\hat{\mathbf{z}}}{\Delta t}= H\dot{\theta} \hat{\mathbf{x}}$$
 
-$$L  = H \dot{\theta} = I_s\omega_s \cdot \frac{2 \pi}{24 \cdot 60 \cdot 60} = 2.262\ \text{mN m}$$
+$$L  = H \dot{\theta} = I_s\omega_s \cdot \frac{2 \pi}{24 \cdot 60 \cdot 60} = 3.808\ \text{mN m}$$
 
 Expressed from the orbital frame.
 
 **Using the transport theorem**:
 
-$$\left( \frac{d \mathbf{H}}{dt} \right)\_{\text{inertial}} = \left(\frac{d\mathbf{H}}{dt} \right)\_{\text{orbital}} + \boldsymbol{\omega}\_{\text{orb}} \times \mathbf{H}$$
+$$\left( \frac{d \mathbf{H}}{dt} \right)\_{\text{inertial}} = \left(\frac{d\mathbf{H}}{dt} \right)\_{\text{orbital}} + \symbf{\omega}\_{\text{orb}} \times \mathbf{H}$$
 
 Since we want the spin axis to stay fixed in the orbital frame $\left( \frac{d\mathbf{H}}{dt} \right)\_{\text{orbital}} = 0$ so:
 
-$$\mathbf{L} =\boldsymbol{\omega}_{\text{orb}} \times \mathbf{H}$$
+$$\mathbf{L} =\symbf{\omega}_{\text{orb}} \times \mathbf{H}$$
 
-Which is the same result we got before as $\boldsymbol{\omega}_{\text{orb}}$ has the value $\dot{\theta}\hat{\mathbf{y}}$ , still expressed on the orbital frame.
+Which is the same result we got before as $\symbf{\omega}_{\text{orb}}$ has the value $\dot{\theta}\hat{\mathbf{y}}$ , still expressed on the orbital frame.
 
 # E 6
 
@@ -444,15 +444,18 @@ max_angle*2 =
 The significant decrease of axial inertia compared to the transverse one would have implied a significant increment in the angle. However, due to the spending of internal energy to convert it into kinetic energy, the angle was decreased as these devices usually intend.
 
 # A 2
+
+## a
+
 Defining $\theta$ as the angle between $\omega$ and the axis of symmetry $\hat{i}$:
 
-$$ \boldsymbol{H} = H_a \hat{i} + H_t \hat{t}\ ; \qquad \boldsymbol{\omega}= \omega_a \hat{i} + \omega_t\hat{t}\ ;\qquad \omega_a = w \cos \theta\ ;\quad w_t = w \sin \theta $$
+$$ \symbf{H} = H_a \hat{i} + H_t \hat{t}\ ; \qquad \symbf{\omega}= \omega_a \hat{i} + \omega_t\hat{t}\ ;\qquad \omega_a = w \cos \theta\ ;\quad w_t = w \sin \theta $$
 
 $$I_a=kI_t; \qquad H_a = I_a\omega_a = kI_t\omega_a; \quad H_t = I_t\omega_t$$
 
-Now, using the dot product we can find the angle between $\boldsymbol{H}$ and $\boldsymbol{\omega}$.
+Now, using the dot product we can find the angle between $\symbf{H}$ and $\symbf{\omega}$.
 
-$$\cos \beta = \frac{\boldsymbol{H}\cdot \boldsymbol{\omega}}{|\boldsymbol{H}||\boldsymbol{\omega}|}$$
+$$\cos \beta = \frac{\symbf{H}\cdot \symbf{\omega}}{|\symbf{H}||\symbf{\omega}|}$$
 
 The maximum value happens at the minimum value of the content inside, given $f$:
 
@@ -460,15 +463,31 @@ $$f(\theta) = \frac{k\cdot\cos^2(\theta) + sin^2(\theta)}{\sqrt{k^2\cdot\cos^2(\
 
 $$f'(\theta)= \frac{\left(k - 1\right)^{2} \cos\left(\theta\right) \sin\left(\theta\right) \left(\sin^{2}\left(\theta\right) - k \cos^{2}\left(\theta\right)\right)}{\left(\sin^{2}\left(\theta\right) + k^{2} \cos^{2}\left(\theta\right)\right)^{\frac{3}{2}}}$$
 
-Which is 0 for the value: 0.886077, getting us $\beta = 11.5369590328º$
-We can know this maximum exists as the $f’$ is positive and $f= 0$ at $\theta = 0$ and  $f'$ is positive and $f= 0$ at $\theta = \frac{\pi}{2}$. As both functions are continuous. We know that there is a point in the middle where $f'$ is 0 and $f''$ needs to be negative. The range of values of $\theta$ goes from 0 to $\frac{\pi}{2}$ as higher values are equivalent in terms of symmetry. 
+Which is 0 for the $\theta = 0.886077 \mathrm{rad}$, getting us $\beta = 11.5371 º$
+
+## b
+
+
+We can know this maximum exists as the $f’$ is positive and $f= 0$ at $\theta = 0$ and  $f'$ is positive and $f= 0$ at $\theta = \frac{\pi}{2}$. As both functions are continuous. We know that there is a point in the middle where $f'$ is 0 and $f''$ needs to be negative. The range of values of $\theta$ goes from 0 to $\frac{\pi}{2}$ as higher values are equivalent in terms of symmetry.
+
+## c
 
 The kinetic energy at the largest value of $\beta$ is given by:
 
-$$ \boldsymbol{H}\cdot \boldsymbol{\omega} = H_a \omega_a + H_t \omega_t;\quad |\boldsymbol{H}| = \sqrt{H_a^2 + H_t^2}| = I_t \omega \sqrt{k^2\cos^2\beta + sin^2\beta};\quad \frac{H^2}{I_t} = I_t \omega ^2 (k^2 \cos^2\beta + sin^2\beta)$$
+$$ T = \frac{1}{2} (I_t \omega_t^2+I_a \omega_a^2) = \frac{1}{2} (\frac{H_t^2}{I_t}+ \frac{H_a^2}{I_a}) = \frac{1}{2} (\frac{H_t^2}{I_t}+ \frac{H_a^2}{kI_t}) $$
+$$ H_a = H \cos(\theta - \beta); \qquad H_t = H \sin(\theta - \beta);$$
+$$ T = \frac{H^2}{2I_t} (\sin^2(\theta-\beta) + \frac{\cos^2(\theta-\beta)}{k}) $$
 
-$$ T = \frac{1}{2} I_t \omega^2 (k \cos^2\beta + sin^2\beta)$$
+$$ T_{\mathrm{max_angle}} = 0.8000  \frac{H^2}{2 I_t}$$
 
 $$
-T=  \frac{H^2}{2I_t} \cdot \frac{k \cos^2\beta + sin^2\beta}{k^2 \cos^2\beta + sin^2\beta}
+T_{\mathrm{max}}= \frac{H^2}{2 I_t}
 $$
+
+$$
+T_{\mathrm{min}}= \frac{H^2}{2 I_a}=\frac{H^2}{3 I_t}
+$$
+
+The kinetic energy is well within the boundaries.
+
+$$ T_{\mathrm{min}} < T_{\mathrm{max\ angle}} <  T_{\mathrm{max}}$$
